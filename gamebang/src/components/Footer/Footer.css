@@ -1,0 +1,6 @@
+.footerContainer {
+  background-color: white;
+  z-index: 2;
+  height: 340px;
+  width: 100%;
+}
