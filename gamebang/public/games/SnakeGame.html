@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
-    <p id="score">Score: 0</p>
-    <p id="highScore">High Score: 0</p>
+  <body style="overflow:hidden">
+    <h3>뱀 키우기 게임</h3>
+    <p><img src="사과30px.png" id="apple" alt="먹이"> 를 먹고 크기를 키우자!</p>
+    <p id="score">현재 점수 : 0</p>
+    <p id="highScore">최고 점수 : 0</p>
+    <canvas id="gameCanvas" width="600" height="600"></canvas>
     <script>
       let canvas = document.getElementById("gameCanvas");
       let context = canvas.getContext("2d");
 
-      let box = 20;
+      let box = 30;
       let snake = [];
       snake[0] = { x: 10 * box, y: 10 * box };
       let food = {
@@ -20,7 +22,7 @@
       let highScore = localStorage.getItem("highScore") || 0;
 
       document.getElementById("highScore").innerText =
-        "High Score: " + highScore;
+        "최고 점수 : " + highScore;
 
       document.addEventListener("keydown", direction);
 
@@ -38,13 +40,15 @@
 
       function draw() {
         context.fillStyle = "#000";
-        context.fillRect(0, 0, 400, 400);
+        context.fillRect(0, 0, 600, 600);
         for (let i = 0; i < snake.length; i++) {
           context.fillStyle = i == 0 ? "green" : "white";
           context.fillRect(snake[i].x, snake[i].y, box, box);
         }
-
-        context.fillStyle = "red";
+        
+        var img = document.getElementById("apple");
+        var pat = context.createPattern(img,"repeat");
+        context.fillStyle =pat;
         context.fillRect(food.x, food.y, box, box);
 
         let snakeX = snake[0].x;
@@ -98,7 +102,7 @@
         return false;
       }
 
-      let game = setInterval(draw, 100);
+      let game = setInterval(draw, 170);
     </script>
   </body>
 </html>
