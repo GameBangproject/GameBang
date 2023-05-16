@@ -6,6 +6,7 @@ const Body = () => {
   return (
     <div className="bodyContainer">
       <span style={{ color: "black" }}>This is Body</span>
+      <a href={process.env.PUBLIC_URL + "/games/SnakeGame.html"}>Snake</a>
     </div>
   );
 };
