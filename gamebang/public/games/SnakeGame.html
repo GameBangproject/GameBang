@@ -1,108 +1,120 @@
 <!DOCTYPE html>
 <html>
-  <body style="overflow:hidden">
-    <h3>뱀 키우기 게임</h3>
-    <p><img src="사과30px.png" id="apple" alt="먹이"> 를 먹고 크기를 키우자!</p>
-    <p id="score">현재 점수 : 0</p>
-    <p id="highScore">최고 점수 : 0</p>
-    <canvas id="gameCanvas" width="600" height="600"></canvas>
-    <script>
-      let canvas = document.getElementById("gameCanvas");
-      let context = canvas.getContext("2d");
 
-      let box = 30;
-      let snake = [];
-      snake[0] = { x: 10 * box, y: 10 * box };
-      let food = {
-        x: Math.floor(Math.random() * 15 + 1) * box,
-        y: Math.floor(Math.random() * 15 + 1) * box,
-      };
-      let d;
-      let score = 0;
-      let highScore = localStorage.getItem("highScore") || 0;
+<body style="overflow:hidden">
+  <h3>뱀 키우기 게임</h3>
+  <p><img src="snakegame_images/사과30px.png" id="apple" alt="먹이"> 를 먹고 크기를 키우자!</p>
+  <p id="score">현재 점수 : 0</p>
+  <p id="highScore">최고 점수 : 0</p>
+  <canvas id="gameCanvas" width="600" height="600"></canvas>
+  <img id="floor" style="visibility: hidden;" src="snakegame_images/floor.png" alt="바닥">
+  <img id="snake_body" style="visibility: hidden;" src="snakegame_images/snake_body30px.png" alt="뱀몸">
+  <script>
+    let canvas = document.getElementById("gameCanvas");
+    let context = canvas.getContext("2d");
 
-      document.getElementById("highScore").innerText =
-        "최고 점수 : " + highScore;
+    let box = 30;
+    let snake = [];
+    snake[0] = { x: 10 * box, y: 10 * box };
+    let food = {
+      x: Math.floor(Math.random() * 15 + 1) * box,
+      y: Math.floor(Math.random() * 15 + 1) * box,
+    };
+    let d;
+    let score = 0;
+    let highScore = localStorage.getItem("highScore") || 0;
 
-      document.addEventListener("keydown", direction);
+    document.getElementById("highScore").innerText =
+      "최고 점수 : " + highScore;
 
-      function direction(event) {
-        if (event.keyCode == 37 && d != "RIGHT") {
-          d = "LEFT";
-        } else if (event.keyCode == 38 && d != "DOWN") {
-          d = "UP";
-        } else if (event.keyCode == 39 && d != "LEFT") {
-          d = "RIGHT";
-        } else if (event.keyCode == 40 && d != "UP") {
-          d = "DOWN";
-        }
+    document.addEventListener("keydown", direction);
+
+    function direction(event) {
+      if (event.keyCode == 37 && d != "RIGHT") {
+        d = "LEFT";
+      } else if (event.keyCode == 38 && d != "DOWN") {
+        d = "UP";
+      } else if (event.keyCode == 39 && d != "LEFT") {
+        d = "RIGHT";
+      } else if (event.keyCode == 40 && d != "UP") {
+        d = "DOWN";
+      }
+    }
+
+    function draw() {
+      var floor = document.getElementById("floor");
+      var floorpat = context.createPattern(floor,"repeat");
+      context.fillStyle = floorpat;
+      context.fillRect(0, 0, 600, 600);
+
+      let snake_body = document.getElementById("snake_body");
+      let snakepat = context.createPattern(snake_body,"repeat");
+      context.fillStyle = snakepat;
+      for (let i = 0; i < snake.length; i++) {
+        context.fillStyle = i == 0 ? "green" : snakepat;
+        context.fillRect(snake[i].x, snake[i].y, box, box);
       }
 
-      function draw() {
-        context.fillStyle = "#000";
-        context.fillRect(0, 0, 600, 600);
-        for (let i = 0; i < snake.length; i++) {
-          context.fillStyle = i == 0 ? "green" : "white";
-          context.fillRect(snake[i].x, snake[i].y, box, box);
-        }
-        
-        var img = document.getElementById("apple");
-        var pat = context.createPattern(img,"repeat");
-        context.fillStyle =pat;
-        context.fillRect(food.x, food.y, box, box);
+      var apple = document.getElementById("apple");
+      var applepat = context.createPattern(apple, "repeat");
+      context.fillStyle = applepat;
+      context.fillRect(food.x, food.y, box, box);
 
-        let snakeX = snake[0].x;
-        let snakeY = snake[0].y;
+      let snakeX = snake[0].x;
+      let snakeY = snake[0].y;
 
-        if (d == "LEFT") snakeX -= box;
-        if (d == "UP") snakeY -= box;
-        if (d == "RIGHT") snakeX += box;
-        if (d == "DOWN") snakeY += box;
+      if (d == "LEFT") snakeX -= box;
+      if (d == "UP") snakeY -= box;
+      if (d == "RIGHT") snakeX += box;
+      if (d == "DOWN") snakeY += box;
 
-        if (snakeX == food.x && snakeY == food.y) {
-          score++;
-          document.getElementById("score").innerText = "Score: " + score;
-          food = {
-            x: Math.floor(Math.random() * 15 + 1) * box,
-            y: Math.floor(Math.random() * 15 + 1) * box,
-          };
-        } else {
-          snake.pop();
-        }
-
-        let newHead = {
-          x: snakeX,
-          y: snakeY,
+      if (snakeX == food.x && snakeY == food.y) {
+        score++;
+        document.getElementById("score").innerText = "Score: " + score;
+        food = {
+          x: Math.floor(Math.random() * 15 + 1) * box,
+          y: Math.floor(Math.random() * 15 + 1) * box,
         };
-
-        if (
-          snakeX < 0 ||
-          snakeX > 19 * box ||
-          snakeY < 0 ||
-          snakeY > 19 * box ||
-          collision(newHead, snake)
-        ) {
-          clearInterval(game);
-          if (score > highScore) {
-            highScore = score;
-            localStorage.setItem("highScore", highScore);
-            document.getElementById("highScore").innerText =
-              "High Score: " + highScore;
-          }
-        }
-
-        snake.unshift(newHead);
-      }
-      function collision(head, array) {
-        for (let i = 0; i < array.length; i++) {
-          if (head.x == array[i].x && head.y == array[i].y) {
-            return true;
-          }
-        }
-        return false;
+      } else {
+        snake.pop();
       }
 
-      let game = setInterval(draw, 170);
-    </script>
-  </body>
+      let newHead = {
+        x: snakeX,
+        y: snakeY,
+      };
+
+      if (
+        snakeX < 0 ||
+        snakeX > 19 * box ||
+        snakeY < 0 ||
+        snakeY > 19 * box ||
+        collision(newHead, snake)
+      ) {
+        clearInterval(game);
+        if (score > highScore) {
+          highScore = score;
+          localStorage.setItem("highScore", highScore);
+          document.getElementById("highScore").innerText =
+            "High Score: " + highScore;
+        }
+      }
+
+      snake.unshift(newHead);
+    }
+    function collision(head, array) {
+      for (let i = 0; i < array.length; i++) {
+        if (head.x == array[i].x && head.y == array[i].y) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    let game = setInterval(draw, 170);
+  </script>
+  
+
+</body>
+
 </html>
