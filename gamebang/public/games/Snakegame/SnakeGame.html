@@ -14,22 +14,35 @@
   
 
   <script>
+    //canvas
     let canvas = document.getElementById("gameCanvas");
     let context = canvas.getContext("2d");
 
+    //unit
     let box = 30;
     let snake = [];
     snake[0] = { x: 10 * box, y: 10 * box };
+
+    //food
     let food = {
       x: Math.floor(Math.random() * 15 + 1) * box,
       y: Math.floor(Math.random() * 15 + 1) * box,
     };
     let d;
+
+    //score
     let score = 0;
     let highScore = localStorage.getItem("highScore") || 0;
 
     document.getElementById("highScore").innerText =
       "최고 점수 : " + highScore;
+
+    //audio
+    let dead = new Audio();
+    let eat = new Audio();
+
+    dead.src = "snakegame_audios/gameover.mp3";
+    eat.src = "snakegame_audios/point.mp3";
 
     document.addEventListener("keydown", direction);
 
@@ -83,6 +96,7 @@
 
       if (snakeX == food.x && snakeY == food.y) {
         score++;
+        eat.play();
         document.getElementById("score").innerText = "현재 점수 : " + score;
         food = {
           x: Math.floor(Math.random() * 15 + 1) * box,
@@ -106,6 +120,7 @@
         collision(newHead, snake)
       ) {
         clearInterval(game);
+        dead.play();
         if (score > highScore) {
           highScore = score;
           localStorage.setItem("highScore", highScore);
@@ -127,6 +142,7 @@
       return false;
     }
 
+    // 250ms 마다 draw함수 호출
     let game = setInterval(draw, 250);
   </script>
   
