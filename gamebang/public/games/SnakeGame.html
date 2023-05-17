@@ -9,10 +9,11 @@
   <canvas id="gameCanvas" width="600" height="600"></canvas>
   <img id="floor" style="visibility: hidden;" src="snakegame_images/floor.png" alt="바닥">
   <img id="snake_body" style="visibility: hidden;" src="snakegame_images/snake_body30px.png" alt="뱀몸">
+
   <script>
     let canvas = document.getElementById("gameCanvas");
     let context = canvas.getContext("2d");
-
+    
     let box = 30;
     let snake = [];
     snake[0] = { x: 10 * box, y: 10 * box };
@@ -70,7 +71,7 @@
 
       if (snakeX == food.x && snakeY == food.y) {
         score++;
-        document.getElementById("score").innerText = "Score: " + score;
+        document.getElementById("score").innerText = "현재 점수 : " + score;
         food = {
           x: Math.floor(Math.random() * 15 + 1) * box,
           y: Math.floor(Math.random() * 15 + 1) * box,
@@ -84,6 +85,7 @@
         y: snakeY,
       };
 
+      // 게임 종료 조건
       if (
         snakeX < 0 ||
         snakeX > 19 * box ||
@@ -102,6 +104,8 @@
 
       snake.unshift(newHead);
     }
+
+
     function collision(head, array) {
       for (let i = 0; i < array.length; i++) {
         if (head.x == array[i].x && head.y == array[i].y) {
@@ -111,7 +115,7 @@
       return false;
     }
 
-    let game = setInterval(draw, 170);
+    let game = setInterval(draw, 250);
   </script>
   
 
