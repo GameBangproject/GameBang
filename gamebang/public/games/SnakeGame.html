@@ -9,11 +9,14 @@
   <canvas id="gameCanvas" width="600" height="600"></canvas>
   <img id="floor" style="visibility: hidden;" src="snakegame_images/floor.png" alt="바닥">
   <img id="snake_body" style="visibility: hidden;" src="snakegame_images/snake_body30px.png" alt="뱀몸">
+  <img id="eyes_x" style="visibility: hidden;" src="snakegame_images/snake_eye_x.png" alt="x축 뱀눈">
+  <img id = "eyes_y" style="visibility: hidden;" src="snakegame_images/snake_eye_y.png" alt="y축 뱀눈">
+  
 
   <script>
     let canvas = document.getElementById("gameCanvas");
     let context = canvas.getContext("2d");
-    
+
     let box = 30;
     let snake = [];
     snake[0] = { x: 10 * box, y: 10 * box };
@@ -50,10 +53,19 @@
 
       let snake_body = document.getElementById("snake_body");
       let snakepat = context.createPattern(snake_body,"repeat");
-      context.fillStyle = snakepat;
+
+      var eyes_x = document.getElementById("eyes_x");
+      var eyes_x_pat = context.createPattern(eyes_x,"repeat");
+      var eyes_y = document.getElementById("eyes_y");
+      var eyes_y_pat = context.createPattern(eyes_y,"repeat");
+
       for (let i = 0; i < snake.length; i++) {
-        context.fillStyle = i == 0 ? "green" : snakepat;
+        if (d=="LEFT" || d=="RIGHT")
+          context.fillStyle = i == 0 ? eyes_x_pat : snakepat;
+        else if (d=="UP" || d=="DOWN")
+          context.fillStyle = i == 0 ? eyes_y_pat : snakepat;
         context.fillRect(snake[i].x, snake[i].y, box, box);
+
       }
 
       var apple = document.getElementById("apple");
@@ -98,7 +110,7 @@
           highScore = score;
           localStorage.setItem("highScore", highScore);
           document.getElementById("highScore").innerText =
-            "High Score: " + highScore;
+            "최고 점수 : " + highScore;
         }
       }
 
