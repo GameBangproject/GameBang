@@ -126,6 +126,48 @@
         y: snakeY,
       };
 
+      //게임시작
+    function startGame() {
+      score = 0;
+      d = null;
+      document.getElementById("score").innerText = "현재 점수 : " + score;
+      snake = [];
+      speed = 8;
+      canvas = document.getElementById("gameCanvas");
+      context = canvas.getContext("2d");
+      snake[0] = { x: 10 * box, y: 10 * box };
+      food = {
+      x: Math.floor(Math.random() * 15 + 1) * box,
+      y: Math.floor(Math.random() * 15 + 1) * box,
+      };
+      draw();
+      game = setInterval(draw, 260 - speed);
+    }
+
+
+      //게임오버
+      function gameOver() {
+        clearInterval(game);
+        dead.play();
+        if (score > highScore) {
+          highScore = score;
+          localStorage.setItem("highScore", highScore);
+          document.getElementById("highScore").innerText =
+            "최고 점수 : " + highScore;
+      }
+      document.addEventListener("keydown", restartGame);
+    }
+    
+    //게임 재시작
+    function restartGame(event) {
+      if(event.keyCode === 32){
+        startGame();
+
+        //스페이스바 이벤트 리스너 제거
+        document.removeEventListener("keydown", restartGame);
+      }
+    }
+
       // 게임 종료 조건
       if (
         snakeX < 0 ||
@@ -134,14 +176,7 @@
         snakeY > 19 * box ||
         collision(newHead, snake)
       ) {
-        clearInterval(game);
-        dead.play();
-        if (score > highScore) {
-          highScore = score;
-          localStorage.setItem("highScore", highScore);
-          document.getElementById("highScore").innerText =
-            "최고 점수 : " + highScore;
-        }
+        gameOver();
       }
 
       snake.unshift(newHead);
