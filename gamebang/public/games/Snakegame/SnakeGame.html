@@ -94,6 +94,8 @@
       if (d == "RIGHT") snakeX += box;
       if (d == "DOWN") snakeY += box;
 
+      
+      // 먹이를 먹었을 때
       if (snakeX == food.x && snakeY == food.y) {
         score++;
         eat.play();
@@ -102,6 +104,19 @@
           x: Math.floor(Math.random() * 15 + 1) * box,
           y: Math.floor(Math.random() * 15 + 1) * box,
         };
+        // 게임 속도 변경
+        // interval 함수 종료
+        clearInterval(game);
+        // speed 기본 값 ( 값을 크게 하면 점점 빨리지는 속도가 커짐, 최댓값 : 13 ) 
+        let speed = 8;
+        // 스코어가 20 까지 증가시키고, 이후론 속도 고정.
+        if (score<20)
+          speed *= score;
+        else
+          speed *= 20;
+        
+        // 변경된 속도값으로 다시 함수 반복 실행.
+        game = setInterval(draw, 260-speed);
       } else {
         snake.pop();
       }
