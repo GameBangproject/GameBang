@@ -6,16 +6,19 @@
 </head>
 
 <body style="overflow:hidden">
-  <h3>뱀 키우기 게임</h3>
+  <h3>Snake Game</h3>
   <p><img src="snakegame_images/사과30px.png" id="apple" alt="먹이"> 를 먹고 크기를 키우자!</p>
   <p id="score">현재 점수 : 0</p>
   <p id="highScore">최고 점수 : 0</p>
   <div id="gameover_text"></div>
+  <button class="button">Main menu</button>
+  <button class="button">Retry</button>
   <canvas id="gameCanvas" width="600" height="600"></canvas>
-  <img id="floor" style="visibility: hidden;" src="snakegame_images/floor.png" alt="바닥">
+  <img id="floor" style="visibility: hidden;" src="snakegame_images/soil.jpeg" alt="바닥">
   <img id="snake_body" style="visibility: hidden;" src="snakegame_images/snake_body30px.png" alt="뱀몸">
   <img id="eyes_x" style="visibility: hidden;" src="snakegame_images/snake_eye_x.png" alt="x축 뱀눈">
   <img id = "eyes_y" style="visibility: hidden;" src="snakegame_images/snake_eye_y.png" alt="y축 뱀눈">
+  
   
 
   <script>
@@ -44,10 +47,14 @@
 
     //audio
     let dead = new Audio();
-    let eat = new Audio();
-
     dead.src = "snakegame_audios/gameover.mp3";
-    eat.src = "snakegame_audios/point.mp3";
+
+    let arr_eat = [];
+    for (i = 0; i<10; i++){
+      let eat = new Audio();
+      eat.src = "snakegame_audios/point.mp3";
+      arr_eat.push(eat);
+    }
 
     document.addEventListener("keydown", direction);
 
@@ -103,7 +110,12 @@
       // 먹이를 먹었을 때
       if (snakeX == food.x && snakeY == food.y) {
         score++;
-        eat.play();
+        for (i = 0; i<arr_eat.length; i++){
+          if(arr_eat[i].paused){
+            arr_eat[i].play();
+            break;
+          }
+        }
         document.getElementById("score").innerText = "현재 점수 : " + score;
         food = {
           x: Math.floor(Math.random() * 15 + 1) * box,
@@ -154,7 +166,7 @@
     function gameOver() {
       clearInterval(game);
       dead.play();
-      gameovertext.innerHTML = "Game Over<br>Press Space Bar to try again";
+      gameovertext.innerHTML = "Game Over";
       if (score > highScore) {
         highScore = score;
         localStorage.setItem("highScore", highScore);
