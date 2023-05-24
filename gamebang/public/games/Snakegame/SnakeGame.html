@@ -89,6 +89,8 @@
           context.fillStyle = i == 0 ? eyes_x_pat : snakepat;
         else if (d=="UP" || d=="DOWN")
           context.fillStyle = i == 0 ? eyes_y_pat : snakepat;
+        else
+          context.fillStyle = eyes_y_pat;
         context.fillRect(snake[i].x, snake[i].y, box, box);
 
       }
