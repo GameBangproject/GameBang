@@ -27,19 +27,22 @@ body {
     box-sizing: border-box;
     appearance: none;
     background-color: transparent;
-    border: 2px solid rgba(169, 56, 217, 0.854);
+    border: 2px solid rgb(255, 121, 199);
     border-radius: 0.6em;
-    color: rgba(169, 56, 217, 0.854);
+    color: rgb(255, 121, 199);
     cursor: pointer;
-    display: flex;
+    display: inline-block;
+    width:160px;
+    height:70px;
+    visibility: hidden;
     align-self: auto;
-    font-size: 1rem;
+    font-size: 17px;
     font-weight: 400;
     line-height: 1;
     margin: 20px;
     padding: 1.2em 2.8em;
     text-decoration: none;
-    text-align: center;
+    text-align: center center;
     text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -48,5 +51,5 @@ body {
 .button:hover {
     color: white;
     outline: 0;
-    box-shadow: 0 0 40px 40px rgba(169, 56, 217, 0.854) inset;
+    box-shadow: 0 0 40px 40px rgb(255, 121, 199) inset;
 }

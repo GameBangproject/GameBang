@@ -11,14 +11,13 @@
   <p id="score">현재 점수 : 0</p>
   <p id="highScore">최고 점수 : 0</p>
   <div id="gameover_text"></div>
-  <button class="button">Main menu</button>
-  <button class="button">Retry</button>
-  <canvas id="gameCanvas" width="600" height="600"></canvas>
+  <button class="button" style="position:absolute; top:52%; left:33%;">Main menu</button>
+  <button class="button" style="position:absolute; top:52%; right:31%;">Retry</button>
+  <canvas id="gameCanvas" width="600" height="600" style="z-index:-2;"></canvas>
   <img id="floor" style="visibility: hidden;" src="snakegame_images/soil.jpeg" alt="바닥">
   <img id="snake_body" style="visibility: hidden;" src="snakegame_images/snake_body30px.png" alt="뱀몸">
   <img id="eyes_x" style="visibility: hidden;" src="snakegame_images/snake_eye_x.png" alt="x축 뱀눈">
   <img id = "eyes_y" style="visibility: hidden;" src="snakegame_images/snake_eye_y.png" alt="y축 뱀눈">
-  
   
 
   <script>
@@ -155,7 +154,7 @@
       canvas = document.getElementById("gameCanvas");
       context = canvas.getContext("2d");
       snake[0] = { x: 10 * box, y: 10 * box };
-      food = {
+      food = { 
       x: Math.floor(Math.random() * 15 + 1) * box,
       y: Math.floor(Math.random() * 15 + 1) * box,
       };
@@ -164,11 +163,17 @@
     }
     
     let gameovertext = document.getElementById("gameover_text");
-      //게임오버
+    let button_Array = document.getElementsByClassName("button");
+
+    //게임오버
     function gameOver() {
       clearInterval(game);
       dead.play();
       gameovertext.innerHTML = "Game Over";
+      for (i = 0; i<button_Array.length; i++){
+        let button = button_Array[i];
+        button.style.visibility = "visible";
+      }
       if (score > highScore) {
         highScore = score;
         localStorage.setItem("highScore", highScore);
@@ -179,13 +184,18 @@
     }
     
     //게임 재시작
-    function restartGame(event) {
+    function restartGame() {
       if(event.keyCode === 32){
         startGame();
         gameovertext.innerHTML = "";
 
         //스페이스바 이벤트 리스너 제거
         document.removeEventListener("keydown", restartGame);
+      }
+
+      for (i = 0; i<button_Array.length; i++){
+        let button = button_Array[i];
+        button.style.visibility = "hidden";
       }
     }
 
