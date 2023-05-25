@@ -11,8 +11,8 @@
   <p id="score">현재 점수 : 0</p>
   <p id="highScore">최고 점수 : 0</p>
   <div id="gameover_text"></div>
-  <button class="button" style="position:absolute; top:52%; left:33%;">Main menu</button>
-  <button class="button" style="position:absolute; top:52%; right:31%;">Retry</button>
+  <button class="button" style="position:absolute; top:52%; left:35%;">Main menu</button>
+  <button class="button" id="restart_game" style="position:absolute; top:52%; right:35%;">Retry</button>
   <canvas id="gameCanvas" width="600" height="600" style="z-index:-2;"></canvas>
   <img id="floor" style="visibility: hidden;" src="snakegame_images/soil.jpeg" alt="바닥">
   <img id="snake_body" style="visibility: hidden;" src="snakegame_images/snake_body30px.png" alt="뱀몸">
@@ -30,10 +30,16 @@
     let snake = [];
     snake[0] = { x: 10 * box, y: 10 * box };
 
+    let tmpx = Math.floor(Math.random() * 15 + 1) * box;
+    let tmpy = Math.floor(Math.random() * 15 + 1) * box;
+    while(tmpx == 10 * box || tmpy == 10 * box){
+      tmpx = Math.floor(Math.random() * 15 + 1) * box;
+      tmpy = Math.floor(Math.random() * 15 + 1) * box;
+    }
     //food
     let food = {
-      x: Math.floor(Math.random() * 15 + 1) * box,
-      y: Math.floor(Math.random() * 15 + 1) * box,
+      x: tmpx,
+      y: tmpy
     };
     let d;
 
@@ -118,9 +124,15 @@
           }
         }
         document.getElementById("score").innerText = "현재 점수 : " + score;
+        tmpx = Math.floor(Math.random() * 15 + 1) * box;
+        tmpy = Math.floor(Math.random() * 15 + 1) * box;
+        while(tmpx == 10 * box || tmpy == 10 * box){
+          tmpx = Math.floor(Math.random() * 15 + 1) * box;
+          tmpy = Math.floor(Math.random() * 15 + 1) * box;
+        } 
         food = {
-          x: Math.floor(Math.random() * 15 + 1) * box,
-          y: Math.floor(Math.random() * 15 + 1) * box,
+          x: tmpx,
+          y: tmpy
         };
         // 게임 속도 변경
         // interval 함수 종료
@@ -148,6 +160,13 @@
     function startGame() {
       score = 0;
       d = null;
+      gameovertext.innerHTML = "";
+      for (i = 0; i<button_Array.length; i++){
+        let button = button_Array[i];
+        button.style.visibility = "hidden";
+      }
+      restart_game.removeEventListener("click", startGame);
+      document.addEventListener("keydown", direction);
       document.getElementById("score").innerText = "현재 점수 : " + score;
       snake = [];
       speed = 8;
@@ -169,6 +188,9 @@
     function gameOver() {
       clearInterval(game);
       dead.play();
+      document.removeEventListener("keydown", direction);
+      restart_game = document.getElementById("restart_game");
+      restart_game.addEventListener("click", startGame);
       gameovertext.innerHTML = "Game Over";
       for (i = 0; i<button_Array.length; i++){
         let button = button_Array[i];
@@ -179,23 +201,6 @@
         localStorage.setItem("highScore", highScore);
         document.getElementById("highScore").innerText =
         "최고 점수 : " + highScore;
-      }
-      document.addEventListener("keydown", restartGame);
-    }
-    
-    //게임 재시작
-    function restartGame() {
-      if(event.keyCode === 32){
-        startGame();
-        gameovertext.innerHTML = "";
-
-        //스페이스바 이벤트 리스너 제거
-        document.removeEventListener("keydown", restartGame);
-      }
-
-      for (i = 0; i<button_Array.length; i++){
-        let button = button_Array[i];
-        button.style.visibility = "hidden";
       }
     }
 
