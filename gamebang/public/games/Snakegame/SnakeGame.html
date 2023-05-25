@@ -10,15 +10,19 @@
   <p><img src="snakegame_images/apple.svg" id="apple" alt="먹이"> 를 먹고 크기를 키우자!</p>
   <p id="score">현재 점수 : 0</p>
   <p id="highScore">최고 점수 : 0</p>
-  <div id="gameover_text"></div>
-  <button class="button" style="position:absolute; top:52%; left:35%;">Main menu</button>
-  <button class="button" id="restart_game" style="position:absolute; top:52%; right:35%;">Retry</button>
-  <canvas id="gameCanvas" width="600" height="600" style="z-index:-2;"></canvas>
+  <div id="button-cover">
+    <div id="gameover_text"></div>
+    <button class="button" style="top:52%; left:35%;">Main menu</button>
+    <button class="button" id="restart_game" style="top:52%; right:35%;">Retry</button>
+  </div>
+  <canvas id="gameCanvas" width="600" height="600" style="z-index:-2;">
+
+  </canvas>
   <img id="floor" style="visibility: hidden;" src="snakegame_images/soil.jpeg" alt="바닥">
   <img id="snake_body" style="visibility: hidden;" src="snakegame_images/snake_body30px.png" alt="뱀몸">
   <img id="eyes_x" style="visibility: hidden;" src="snakegame_images/snake_eye_x.png" alt="x축 뱀눈">
-  <img id = "eyes_y" style="visibility: hidden;" src="snakegame_images/snake_eye_y.png" alt="y축 뱀눈">
-  
+  <img id="eyes_y" style="visibility: hidden;" src="snakegame_images/snake_eye_y.png" alt="y축 뱀눈">
+
 
   <script>
     //canvas
@@ -32,7 +36,7 @@
 
     let tmpx = Math.floor(Math.random() * 15 + 1) * box;
     let tmpy = Math.floor(Math.random() * 15 + 1) * box;
-    while(tmpx == 10 * box || tmpy == 10 * box){
+    while (tmpx == 10 * box || tmpy == 10 * box) {
       tmpx = Math.floor(Math.random() * 15 + 1) * box;
       tmpy = Math.floor(Math.random() * 15 + 1) * box;
     }
@@ -55,7 +59,7 @@
     dead.src = "snakegame_audios/gameover.mp3";
 
     let arr_eat = [];
-    for (i = 0; i<10; i++){
+    for (i = 0; i < 10; i++) {
       let eat = new Audio();
       eat.src = "snakegame_audios/point.mp3";
       arr_eat.push(eat);
@@ -77,22 +81,22 @@
 
     function draw() {
       var floor = document.getElementById("floor");
-      var floorpat = context.createPattern(floor,"repeat");
+      var floorpat = context.createPattern(floor, "repeat");
       context.fillStyle = floorpat;
       context.fillRect(0, 0, 600, 600);
 
       let snake_body = document.getElementById("snake_body");
-      let snakepat = context.createPattern(snake_body,"repeat");
+      let snakepat = context.createPattern(snake_body, "repeat");
 
       var eyes_x = document.getElementById("eyes_x");
-      var eyes_x_pat = context.createPattern(eyes_x,"repeat");
+      var eyes_x_pat = context.createPattern(eyes_x, "repeat");
       var eyes_y = document.getElementById("eyes_y");
-      var eyes_y_pat = context.createPattern(eyes_y,"repeat");
+      var eyes_y_pat = context.createPattern(eyes_y, "repeat");
 
       for (let i = 0; i < snake.length; i++) {
-        if (d=="LEFT" || d=="RIGHT")
+        if (d == "LEFT" || d == "RIGHT")
           context.fillStyle = i == 0 ? eyes_x_pat : snakepat;
-        else if (d=="UP" || d=="DOWN")
+        else if (d == "UP" || d == "DOWN")
           context.fillStyle = i == 0 ? eyes_y_pat : snakepat;
         else
           context.fillStyle = eyes_y_pat;
@@ -113,12 +117,12 @@
       if (d == "RIGHT") snakeX += box;
       if (d == "DOWN") snakeY += box;
 
-      
+
       // 먹이를 먹었을 때
       if (snakeX == food.x && snakeY == food.y) {
         score++;
-        for (i = 0; i<arr_eat.length; i++){
-          if(arr_eat[i].paused){
+        for (i = 0; i < arr_eat.length; i++) {
+          if (arr_eat[i].paused) {
             arr_eat[i].play();
             break;
           }
@@ -126,10 +130,10 @@
         document.getElementById("score").innerText = "현재 점수 : " + score;
         tmpx = Math.floor(Math.random() * 15 + 1) * box;
         tmpy = Math.floor(Math.random() * 15 + 1) * box;
-        while(tmpx == 10 * box || tmpy == 10 * box){
+        while (tmpx == 10 * box || tmpy == 10 * box) {
           tmpx = Math.floor(Math.random() * 15 + 1) * box;
           tmpy = Math.floor(Math.random() * 15 + 1) * box;
-        } 
+        }
         food = {
           x: tmpx,
           y: tmpy
@@ -140,13 +144,13 @@
         // speed 기본 값 ( 값을 크게 하면 점점 빨리지는 속도가 커짐, 최댓값 : 13 ) 
         let speed = 8;
         // 스코어가 20 까지 증가시키고, 이후론 속도 고정.
-        if (score<20)
+        if (score < 20)
           speed *= score;
         else
           speed *= 20;
-        
+
         // 변경된 속도값으로 다시 함수 반복 실행.
-        game = setInterval(draw, 260-speed);
+        game = setInterval(draw, 260 - speed);
       } else {
         snake.pop();
       }
@@ -157,52 +161,52 @@
       };
 
       //게임시작
-    function startGame() {
-      score = 0;
-      d = null;
-      gameovertext.innerHTML = "";
-      for (i = 0; i<button_Array.length; i++){
-        let button = button_Array[i];
-        button.style.visibility = "hidden";
+      function startGame() {
+        score = 0;
+        d = null;
+        gameovertext.innerHTML = "";
+        for (i = 0; i < button_Array.length; i++) {
+          let button = button_Array[i];
+          button.style.visibility = "hidden";
+        }
+        restart_game.removeEventListener("click", startGame);
+        document.addEventListener("keydown", direction);
+        document.getElementById("score").innerText = "현재 점수 : " + score;
+        snake = [];
+        speed = 8;
+        canvas = document.getElementById("gameCanvas");
+        context = canvas.getContext("2d");
+        snake[0] = { x: 10 * box, y: 10 * box };
+        food = {
+          x: Math.floor(Math.random() * 15 + 1) * box,
+          y: Math.floor(Math.random() * 15 + 1) * box,
+        };
+        draw();
+        game = setInterval(draw, 260 - speed);
       }
-      restart_game.removeEventListener("click", startGame);
-      document.addEventListener("keydown", direction);
-      document.getElementById("score").innerText = "현재 점수 : " + score;
-      snake = [];
-      speed = 8;
-      canvas = document.getElementById("gameCanvas");
-      context = canvas.getContext("2d");
-      snake[0] = { x: 10 * box, y: 10 * box };
-      food = { 
-      x: Math.floor(Math.random() * 15 + 1) * box,
-      y: Math.floor(Math.random() * 15 + 1) * box,
-      };
-      draw();
-      game = setInterval(draw, 260 - speed);
-    }
-    
-    let gameovertext = document.getElementById("gameover_text");
-    let button_Array = document.getElementsByClassName("button");
 
-    //게임오버
-    function gameOver() {
-      clearInterval(game);
-      dead.play();
-      document.removeEventListener("keydown", direction);
-      restart_game = document.getElementById("restart_game");
-      restart_game.addEventListener("click", startGame);
-      gameovertext.innerHTML = "Game Over";
-      for (i = 0; i<button_Array.length; i++){
-        let button = button_Array[i];
-        button.style.visibility = "visible";
+      let gameovertext = document.getElementById("gameover_text");
+      let button_Array = document.getElementsByClassName("button");
+
+      //게임오버
+      function gameOver() {
+        clearInterval(game);
+        dead.play();
+        document.removeEventListener("keydown", direction);
+        restart_game = document.getElementById("restart_game");
+        restart_game.addEventListener("click", startGame);
+        gameovertext.innerHTML = "Game Over";
+        for (i = 0; i < button_Array.length; i++) {
+          let button = button_Array[i];
+          button.style.visibility = "visible";
+        }
+        if (score > highScore) {
+          highScore = score;
+          localStorage.setItem("highScore", highScore);
+          document.getElementById("highScore").innerText =
+            "최고 점수 : " + highScore;
+        }
       }
-      if (score > highScore) {
-        highScore = score;
-        localStorage.setItem("highScore", highScore);
-        document.getElementById("highScore").innerText =
-        "최고 점수 : " + highScore;
-      }
-    }
 
       // 게임 종료 조건
       if (
@@ -231,7 +235,7 @@
     // 250ms 마다 draw함수 호출
     let game = setInterval(draw, 250);
   </script>
-  
+
 
 </body>
 
