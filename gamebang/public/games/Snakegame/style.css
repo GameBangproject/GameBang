@@ -23,7 +23,17 @@ body {
     z-index: 0;
 }
 
+#button-cover {
+    width: 600px;
+    height: 300px;
+    margin: auto;
+    display: flex;
+}
+
+
 .button{
+    justify-content: center;
+    margin: auto;
     box-sizing: border-box;
     appearance: none;
     background-color: transparent;
@@ -35,14 +45,9 @@ body {
     width:160px;
     height:70px;
     visibility: hidden;
-    align-self: auto;
     font-size: 17px;
-    font-weight: 400;
     line-height: 1;
-    margin: 20px;
-    padding: 1.2em 2.8em;
     text-decoration: none;
-    text-align: center center;
     text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
