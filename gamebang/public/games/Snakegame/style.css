@@ -53,3 +53,14 @@ body {
     outline: 0;
     box-shadow: 0 0 40px 40px rgb(255, 121, 199) inset;
 }
+
+@font-face {
+    src:url("snakegame_font/SnakeDemo-lgEeD.otf");
+    font-family:"Snake Outline";
+}
+
+h3 {
+    font-family:"Snake Outline";
+    color:rgba(10, 107, 10, 0.777);
+    font-size:70px;
+}
