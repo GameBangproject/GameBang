@@ -51,7 +51,9 @@ const Footer = () => {
   return (
     <div className="footerContainer">
       <div className="image-container">
-        <img src={cappadocia} alt="Cappadocia" />
+        <a href={process.env.PUBLIC_URL + "/games/Snakegame/SnakeGame.html"}>
+          <img src={cappadocia} alt="Cappadocia" />
+        </a>
         <img src={dokyo} alt="Dokyo" />
         <img src={Paris} alt="Paris" />
         <img src={taipei} alt="Taipei" />
