@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .button {
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Simple QTE Rhythm Game</h2>
+
+    <button class="button" id="button1" onclick="checkQTE(1)">1</button>
+    <button class="button" id="button2" onclick="checkQTE(2)">2</button>
+    <button class="button" id="button3" onclick="checkQTE(3)">3</button>
+    <button class="button" id="button4" onclick="checkQTE(4)">4</button>
+
+    <script>
+      var currentQTE = 1;
+
+      function startGame() {
+        setInterval(() => {
+          currentQTE = Math.floor(Math.random() * 4) + 1;
+          highlightButton(currentQTE);
+        }, 2000); // change every 2 seconds
+      }
+
+      function checkQTE(buttonNumber) {
+        if (buttonNumber === currentQTE) {
+          alert("Correct!");
+        } else {
+          alert("Incorrect, try again!");
+        }
+      }
+
+      function highlightButton(buttonNumber) {
+        var buttons = document.getElementsByClassName("button");
+        for (var i = 0; i < buttons.length; i++) {
+          if (i === buttonNumber - 1) {
+            buttons[i].style.backgroundColor = "red";
+          } else {
+            buttons[i].style.backgroundColor = "";
+          }
+        }
+      }
+
+      startGame();
+    </script>
+  </body>
+</html>
