@@ -46,16 +46,6 @@
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
 }
 
-.TetrisGameModalButton {
-  background-image: url("../../resources/dokyo.png");
-  background-size: cover;
-  background-position: center center;
-  border-radius: 15px;
-  margin-right: 10px;
-  width: 400px;
-  height: 250px;
-}
-
 .close {
   position: absolute;
   top: 20px;

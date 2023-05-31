@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
 import "./SnakeGameModal.css";
-import SnakeGameVideo from "../../snakegame_video/SnakeGameVideo.mov";
+import SnakeGameVideo from "../../videos/snakegame_video/SnakeGameVideo.mov";
 
 const SnakeGameModal = ({ setModalOpen }) => {
   const modalRef = useRef(null);
@@ -43,10 +43,7 @@ const SnakeGameModal = ({ setModalOpen }) => {
               늘어납니다. 뱀이 벽이나 자기 자신과 충돌하면 게임이 종료됩니다.
             </span>
           </div>
-          <a
-            href={process.env.PUBLIC_URL + "/games/Snakegame/SnakeGame.html"}
-            className="SnakePlayButton"
-          >
+          <a href={"/games/Snakegame/SnakeGame.html"} className="PlayButton">
             게임 플레이
           </a>
         </div>

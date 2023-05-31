@@ -3,15 +3,32 @@
   <head>
     <link rel="stylesheet" href="style.css" />
   </head>
-
+  <body onload="document.getElementById('highScore').innerText = '최고 점수 : ' + (highScores.length > 0 ? highScores[0] : 0);">
   <body style="overflow: hidden">
-    <h3>Snake Game</h3>
-    <p>
-      <img src="snakegame_images/apple.svg" id="apple" alt="먹이" /> 를 먹고
-      크기를 키우자!
-    </p>
-    <p id="score">현재 점수 : 0</p>
-    <p id="highScore">최고 점수 : 0</p>
+    <span id="title">Snake Game</span>
+    <div>
+      <span>
+        <img src="snakegame_images/apple.svg" id="apple" alt="먹이" /> 를 먹고
+        크기를 키우자!
+      </span>  
+      <br>
+      <br>
+      <div id="table">
+        <div>
+          <table id="highScoresTable" >
+              <th colspan="2">Ranking</th>
+            <tr>
+              <th>등수</th>
+              <th>점수</th>
+            </tr>
+          </table>
+        </div>
+        <div id="scoreBox">
+          <span id="score">현재 점수 : 0</span>
+          <span id="score">최고 점수 : 0</span>
+        </div>
+      </div>
+    </div>
     <div id="button-cover">
       <div id="gameover_text"></div>
       <button class="button" style="top: 52%; left: 35%">Main menu</button>
@@ -71,10 +88,37 @@
 
       //score
       let score = 0;
-      let highScore = localStorage.getItem("highScore") || 0;
+      let highScore = localStorage.getItem("highScore")
+        ? localStorage.getItem("highScore")
+        : 0;
 
-      document.getElementById("highScore").innerText =
-        "최고 점수 : " + highScore;
+      //최고 점수 리스트를 불러옵니다.
+      let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+      // 점수 테이블을 갱신하는 함수입니다.
+      function updateHighScoresTable() {
+        const table = document.getElementById("highScoresTable");
+
+        // 이전에 추가한 점수를 모두 제거합니다.
+        while (table.rows.length > 2) {
+          table.deleteRow(2);
+        }
+
+        // 각 점수를 테이블에 추가합니다.
+        for (let i = 0; i < highScores.length; i++) {
+          const row = table.insertRow();
+          const rankCell = row.insertCell();
+          const scoreCell = row.insertCell();
+
+          rankCell.textContent = i + 1 + "th";
+          scoreCell.textContent = highScores[i] + "점";
+        }
+      }
+
+      console.log("최고 점수: ", highScores[0]);
+
+      // 페이지가 로드될 때 점수 테이블을 갱신합니다.
+      updateHighScoresTable();
 
       //audio
       let dead = new Audio();
@@ -223,6 +267,20 @@
             document.getElementById("highScore").innerText =
               "최고 점수 : " + highScore;
           }
+
+          // 현재 점수를 최고 점수 리스트에 추가하고, 최고 점수 10개만 유지합니다.
+          highScores.push(score);
+          highScores.sort((a, b) => b - a);
+          highScores = highScores.slice(0, 10);
+
+          // 변경된 최고 점수 리스트를 로컬 스토리지에 저장합니다.
+          localStorage.setItem("highScores", JSON.stringify(highScores));
+
+          // 게임이 끝났으므로 화면 전환 애니메이션 실행
+          document.getElementById('container').style.transform = 'translateX(-50%)';
+
+          // 점수 테이블을 갱신합니다.
+          updateHighScoresTable();
         }
 
         // 게임 종료 조건
