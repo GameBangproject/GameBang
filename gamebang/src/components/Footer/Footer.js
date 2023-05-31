@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
+import { CSSTransition } from "react-transition-group";
 import "./Footer.css";
 
 import SnakeGameModal from "../Modals/SnakeGameModal/SnakeGameModal";
+import BrickOutModal from "../Modals/BrickOutModal/BrickOutModal";
 
 const Footer = () => {
   const [modalOpen, setModalOpen] = useState(0);
@@ -73,22 +75,22 @@ const Footer = () => {
           onClick={() => setModalOpen(4)}
         ></button>
       </div>
-      {modalOpen === 1 && <SnakeGameModal setModalOpen={setModalOpen} />}
-      {modalOpen === 2 && (
-        <div className="modal" ref={modalRef}>
-          <button onClick={() => setModalOpen(0)}>Close Modal 2</button>
-        </div>
-      )}
-      {modalOpen === 3 && (
-        <div className="modal" ref={modalRef}>
-          <button onClick={() => setModalOpen(0)}>Close Modal 3</button>
-        </div>
-      )}
-      {modalOpen === 4 && (
-        <div className="modal" ref={modalRef}>
-          <button onClick={() => setModalOpen(0)}>Close Modal 4</button>
-        </div>
-      )}
+      <CSSTransition
+        in={modalOpen === 1}
+        timeout={300}
+        classNames="my-node"
+        unmountOnExit
+      >
+        <SnakeGameModal setModalOpen={setModalOpen} />
+      </CSSTransition>
+      <CSSTransition
+        in={modalOpen === 2}
+        timeout={300}
+        classNames="my-node"
+        unmountOnExit
+      >
+        <BrickOutModal setModalOpen={setModalOpen} />
+      </CSSTransition>
     </div>
   );
 };

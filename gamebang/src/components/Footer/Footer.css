@@ -34,32 +34,16 @@
 }
 
 .SnakeGameModalButton {
-  background-image: url("../../resources/cappadocia.png");
+  background-image: url("../../resources/SnakeGameThumbnail.png");
   background-size: cover;
   background-position: center center;
+  border-radius: 15px;
+  /* border: 1px solid lightgray; */
   border: none;
   margin-right: 10px;
   width: 400px;
   height: 250px;
-}
-
-.TetrisGameModalButton {
-  background-image: url("../../resources/dokyo.png");
-  background-size: cover;
-  background-position: center center;
-  border: none;
-  margin-right: 10px;
-  width: 400px;
-  height: 250px;
-}
-.SnakeGameModalButton {
-  background-image: url("../../resources/cappadocia.png");
-  background-size: cover;
-  background-position: center center;
-  border: none;
-  margin-right: 10px;
-  width: 400px;
-  height: 250px;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
 }
 
 .close {
@@ -74,4 +58,18 @@
 .game-play button {
   font-size: 1.2em;
   padding: 10px;
+}
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
 }
