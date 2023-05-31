@@ -6,13 +6,13 @@
   <body onload="document.getElementById('highScore').innerText = '최고 점수 : ' + (highScores.length > 0 ? highScores[0] : 0);">
   <body style="overflow: hidden">
     <span id="title">Snake Game</span>
-    <div>
+    <div id = "ranking_box">
       <p>
         <img src="snakegame_images/apple.svg" id="apple" alt="먹이" /> 를 먹고
         크기를 키우자!
       </p>  
       <div id="table">
-        <div>
+        <div id = "scoreBox">
           <table id="highScoresTable" >
               <th colspan="2">Ranking</th>
             <tr>
@@ -21,12 +21,16 @@
             </tr>
           </table>
         </div>
+   
+
         <div id="scoreBox">
           <span id="score">현재 점수 : 0</span>
           <span id="score">최고 점수 : 0</span>
         </div>
       </div>
     </div>
+    <canvas id="gameCanvas" width="600" height="600" style="z-index: -2">
+    </canvas>
     <div id="button-cover">
       <div id="gameover_text"></div>
       <button class="button" style="top: 52%; left: 35%">Main menu</button>
@@ -34,8 +38,6 @@
         Retry
       </button>
     </div>
-    <canvas id="gameCanvas" width="600" height="600" style="z-index: -2">
-    </canvas>
     <img
       id="floor"
       style="visibility: hidden"

@@ -15,22 +15,8 @@ body {
   z-index: 1;
 }
 
-#gameCanvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-}
-
-#button-cover {
-  width: 600px;
-  height: 300px;
-  margin: auto;
-  display: flex;
-}
-
 .button {
+  position:absolute;
   justify-content: center;
   margin: auto;
   box-sizing: border-box;
@@ -40,7 +26,6 @@ body {
   border-radius: 0.6em;
   color: rgb(255, 121, 199);
   cursor: pointer;
-  display: inline-block;
   width: 160px;
   height: 70px;
   visibility: hidden;
@@ -57,6 +42,23 @@ body {
   outline: 0;
   box-shadow: 0 0 40px 40px rgb(255, 121, 199) inset;
 }
+
+#gameCanvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+#button-cover {
+  width: 600px;
+  height: 300px;
+  margin:auto;
+  display: inline-block;
+  z-index: 1;
+}
+
 
 @font-face {
   src: url("snakegame_font/SnakeDemo-lgEeD.otf");
@@ -87,6 +89,16 @@ body {
   text-align: center;
   width: 200px;
   max-height: 500px;
+}
+#score {
+  border-radius: 15px;
+  border: 2px solid black;
+  padding: 10px;
+  margin-top: 20px;
+  /* margin-left: 5px; */
+  /* margin-right: 5px; */
+  z-index: 3;
+  text-align: center;
 }
 
 /* animation styles */
@@ -125,17 +137,12 @@ body {
   /* other styles for your ranking display */
 }
 
-#score {
-  border-radius: 15px;
-  border: 2px solid black;
-  padding: 10px;
-  margin-top: 20px;
-  /* margin-left: 5px; */
-  /* margin-right: 5px; */
-  width: 400px;
-
-  text-align: center;
+#ranking_box{
+  width: 20%;
+  z-index: 3;
+  display: inline-block;
 }
+
 
 #scoreBox {
   display: flex;

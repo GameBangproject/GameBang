@@ -18,10 +18,13 @@
 <script>
   var currentQTE = 1; // 박스 위치(왼쪽부터 1, 2, 3)
   var score = 0; // 점수
+  var highScore = localStorage.getItem("highScore") || 0;
   var canvas; // 게임판
   var ctx;
   var blockPosition = 0; // 박스가 처음 생성되는 위치
   var speed = 5;
+
+  document.getElementById("highScore").innerText = "최고 점수 : " + highScore;
 
   // 게임 시작 합수
   function startGame() {
@@ -74,6 +77,14 @@
         break;
     }
   });
+
+  function gameOver(){
+    if (score > highScore) {
+      highScore = score;
+      localStorage.setItem("highScore", highScore);
+      document.getElementById("highscore").innerText = "최고 점수 : " + highScore;
+    }
+  }
 
   startGame(); // 게임 시작
 </script>
