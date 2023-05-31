@@ -60,7 +60,7 @@
 
 /* 플레이 버튼 */
 
-.SnakePlayButton {
+.PlayButton {
   height: 40px;
   border-radius: 10px;
   border: 1px solid lightgray;

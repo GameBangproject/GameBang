@@ -1,0 +1,74 @@
+.modal {
+  position: fixed;
+  top: 150px;
+  width: 1000px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+  z-index: 1000; /* Ensure modal appears above all other content */
+}
+
+.modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.game-demo {
+  flex: 2;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-demo video {
+  height: 500px;
+  width: 100%;
+}
+
+.game-description-play {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  border-left: 1px solid lightgray;
+}
+
+.game-description {
+  flex: 1;
+  overflow: auto;
+}
+
+.game-play {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 플레이 버튼 */
+
+.PlayButton {
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  background-color: #ea455a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-size: 18px;
+}
