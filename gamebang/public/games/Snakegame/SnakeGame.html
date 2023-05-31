@@ -7,12 +7,10 @@
   <body style="overflow: hidden">
     <span id="title">Snake Game</span>
     <div>
-      <span>
+      <p>
         <img src="snakegame_images/apple.svg" id="apple" alt="먹이" /> 를 먹고
         크기를 키우자!
-      </span>  
-      <br>
-      <br>
+      </p>  
       <div id="table">
         <div>
           <table id="highScoresTable" >
@@ -275,9 +273,6 @@
 
           // 변경된 최고 점수 리스트를 로컬 스토리지에 저장합니다.
           localStorage.setItem("highScores", JSON.stringify(highScores));
-
-          // 게임이 끝났으므로 화면 전환 애니메이션 실행
-          document.getElementById('container').style.transform = 'translateX(-50%)';
 
           // 점수 테이블을 갱신합니다.
           updateHighScoresTable();
