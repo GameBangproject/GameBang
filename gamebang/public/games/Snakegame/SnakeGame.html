@@ -7,12 +7,10 @@
   <body style="overflow: hidden">
     <span id="title">Snake Game</span>
     <div id = "ranking_box">
-      <span>
+      <p>
         <img src="snakegame_images/apple.svg" id="apple" alt="먹이" /> 를 먹고
         크기를 키우자!
-      </span>  
-      <br>
-      <br>
+      </p>  
       <div id="table">
         <div id = "scoreBox">
           <table id="highScoresTable" >
@@ -111,8 +109,18 @@
           const row = table.insertRow();
           const rankCell = row.insertCell();
           const scoreCell = row.insertCell();
-
-          rankCell.textContent = i + 1 + "th";
+          if (i == 0){
+            rankCell.textContent = i + 1 + "st";
+          }
+          else if (i == 1){
+            rankCell.textContent = i + 1 + "nd";
+          }
+          else if (i == 2){
+            rankCell.textContent = i + 1 + "rd";
+          }
+          else {
+            rankCell.textContent = i + 1 + "th";
+          }
           scoreCell.textContent = highScores[i] + "점";
         }
       }
@@ -277,9 +285,6 @@
 
           // 변경된 최고 점수 리스트를 로컬 스토리지에 저장합니다.
           localStorage.setItem("highScores", JSON.stringify(highScores));
-
-          // 게임이 끝났으므로 화면 전환 애니메이션 실행
-          document.getElementById('container').style.transform = 'translateX(-50%)';
 
           // 점수 테이블을 갱신합니다.
           updateHighScoresTable();
