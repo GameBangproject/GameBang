@@ -107,8 +107,18 @@
           const row = table.insertRow();
           const rankCell = row.insertCell();
           const scoreCell = row.insertCell();
-
-          rankCell.textContent = i + 1 + "th";
+          if (i == 0){
+            rankCell.textContent = i + 1 + "st";
+          }
+          else if (i == 1){
+            rankCell.textContent = i + 1 + "nd";
+          }
+          else if (i == 2){
+            rankCell.textContent = i + 1 + "rd";
+          }
+          else {
+            rankCell.textContent = i + 1 + "th";
+          }
           scoreCell.textContent = highScores[i] + "점";
         }
       }
