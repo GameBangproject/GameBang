@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <style>
     #gameCanvas {
@@ -7,87 +8,98 @@
     }
   </style>
 </head>
+
 <body>
 
-<h2>Simple QTE Rhythm Game</h2>
-<p id="score">현재 점수 : 0</p>
-<p id="highScore">최고 점수 : 0</p>
+  <h2>Simple QTE Rhythm Game</h2>
+  <p id="score">현재 점수 : 0</p>
+  <p id="highScore">최고 점수 : 0</p>
 
-<canvas id="gameCanvas" width="300" height="600"></canvas>
+  <canvas id="gameCanvas" width="300" height="600"></canvas>
 
-<script>
-  var currentQTE = 1; // 박스 위치(왼쪽부터 1, 2, 3)
-  var score = 0; // 점수
-  var highScore = localStorage.getItem("highScore") || 0;
-  var canvas; // 게임판
-  var ctx;
-  var blockPosition = 0; // 박스가 처음 생성되는 위치
-  var speed = 5;
+  <script>
+    var currentQTE = 1; // 박스 위치(왼쪽부터 1, 2, 3)
+    var score = 0; // 점수
+    var highScore = localStorage.getItem("highScore") || 0;
+    var canvas; // 게임판
+    var ctx;
+    var blockPosition = 0; // 박스가 처음 생성되는 위치
+    var speed = 5;
+    var intarvalspeed = 2000;
+    var repeat;
+    document.getElementById("highScore").innerText = "최고 점수 : " + highScore;
 
-  document.getElementById("highScore").innerText = "최고 점수 : " + highScore;
-
-  // 게임 시작 합수
-  function startGame() {
-    canvas = document.getElementById("gameCanvas");// canvas 생성
-    ctx = canvas.getContext("2d");
-    
-    // 반복시간이 정해져 있어서 setinterval 말고 다른 방법을 구해야 함.
-    // 이렇게 하면 매번 2초마다 박스가 내려와서 빠르게 박스가 내려와도 2초 다 채워지기 전에는 새로운 박스가 내려오지 못함.
-    setInterval(() => { // 반복해서 실행
+    function draw() {
       currentQTE = Math.floor(Math.random() * 3) + 1; // 박스 위치 설정. 
       // ex) min <= 랜덤값 < max 설정하고 싶으면  math.random() * (max-min)+ min
       blockPosition = 0;
       speed = 5;
-      drawBlocks(); // 박스 그리기
-    }, 2000); // 2초마다 함수 반복 (점수 증가시 speed 값으로 연계해서 비율로줄임)
-  }
+      drawBlocks();
+      if (score != 0 && score % 5 == 0) {
+        speed += 1;
+        clearInterval(repeat);
+        repeat = setInterval(draw, 600 / speed * 16.7);
+      }
+    }
 
-  function checkQTE(buttonNumber) {
-    if (buttonNumber === currentQTE && (blockPosition >= 510 && 610>=blockPosition)) {
-      score++;
-      document.getElementById("score").innerText = "현재점수 : "+score;
-    } else {
+    // 게임 시작 합수
+    function startGame() {
+      canvas = document.getElementById("gameCanvas");// canvas 생성
+      ctx = canvas.getContext("2d");
+
+      // 반복시간이 정해져 있어서 setinterval 말고 다른 방법을 구해야 함.
+      // 이렇게 하면 매번 2초마다 박스가 내려와서 빠르게 박스가 내려와도 2초 다 채워지기 전에는 새로운 박스가 내려오지 못함.
+      repeat = setInterval(draw, 2000); // 2초마다 함수 반복 (점수 증가시 speed 값으로 연계해서 비율로줄임)
 
     }
-  }
 
-  // 박스 그리기
-  function drawBlocks() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // 캔버스 크기만큼 clear
-    ctx.fillStyle = "black"; // 어떤색으로 칠할지 결정(랜덤하게 무지개로 했으면 좋겠음)
-    ctx.fillRect((currentQTE - 1) * 100, blockPosition, 100, 100); // 박스의 내려오는 줄 설정
-    blockPosition += speed; // 블록이 내려오는 속도 
-    if (blockPosition > canvas.height-10) { // 블록의 윗 변이 캔버스의 맨 아래부분-10 보다 더 내려가면 
-      // 박스를 놓친 조건
-    } else { // 박스를 놓치지 않았다면 이 함수인 drawblocks 함수 반복(블록이 내려오게 된다)
-      requestAnimationFrame(drawBlocks);
+    function checkQTE(buttonNumber) {
+      if (buttonNumber === currentQTE && (blockPosition >= 510 && 610 >= blockPosition)) {
+        score++;
+        document.getElementById("score").innerText = "현재점수 : " + score;
+      } else {
+
+      }
     }
-  }
 
-  document.addEventListener('keydown', function (event) { // 키보드 버튼 이벤트리스너
-    switch (event.key) {
-      case 'ArrowLeft':
-        checkQTE(1); // 왼쪽 누르면 이랑 1번 박스 비교
-        break;
-      case 'ArrowDown': // 아래 누르면 2번 박스 비교
-        checkQTE(2);
-        break;
-      case 'ArrowRight': // 오른쪽 누르면 3번 박스 비교
-        checkQTE(3);
-        break;
+    // 박스 그리기
+    function drawBlocks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // 캔버스 크기만큼 clear
+      ctx.fillStyle = "black"; // 어떤색으로 칠할지 결정(랜덤하게 무지개로 했으면 좋겠음)
+      ctx.fillRect((currentQTE - 1) * 100, blockPosition, 100, 100); // 박스의 내려오는 줄 설정
+      blockPosition += speed; // 블록이 내려오는 속도 
+      if (blockPosition > canvas.height - 10) { // 블록의 윗 변이 캔버스의 맨 아래부분-10 보다 더 내려가면 
+        // 박스를 놓친 조건
+      } else { // 박스를 놓치지 않았다면 이 함수인 drawblocks 함수 반복(블록이 내려오게 된다)
+        requestAnimationFrame(drawBlocks);
+      }
     }
-  });
 
-  function gameOver(){
-    if (score > highScore) {
-      highScore = score;
-      localStorage.setItem("highScore", highScore);
-      document.getElementById("highscore").innerText = "최고 점수 : " + highScore;
+    document.addEventListener('keydown', function (event) { // 키보드 버튼 이벤트리스너
+      switch (event.key) {
+        case 'ArrowLeft':
+          checkQTE(1); // 왼쪽 누르면 이랑 1번 박스 비교
+          break;
+        case 'ArrowDown': // 아래 누르면 2번 박스 비교
+          checkQTE(2);
+          break;
+        case 'ArrowRight': // 오른쪽 누르면 3번 박스 비교
+          checkQTE(3);
+          break;
+      }
+    });
+
+    function gameOver() {
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+        document.getElementById("highscore").innerText = "최고 점수 : " + highScore;
+      }
     }
-  }
 
-  startGame(); // 게임 시작
-</script>
+    startGame(); // 게임 시작
+  </script>
 
 </body>
+
 </html>
