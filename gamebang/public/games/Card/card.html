@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>카드 뒤집기 게임</title>
+  <link rel="stylesheet" href="card.css">
+</head>
+<body>
+  <div id="score">Score: 0</div>
+  <div id="game-container"></div>
+  
+
+  <script>
+    let x = 5;
+    let y = 4;
+    let back_color = [
+      'red', 'red,', 'yellow', 'yellow', 'green', 'green', 'blue', 'blue',
+      'purple', 'purple', 'gray', 'gray', 'pink', 'pink', 'orange', 'orange',
+      'aqua', 'aqua', 'brown', 'brown'
+    ]
+    let chooseColor = [];
+    while (back_color.length > 0){
+      let color = Math.floor(Math.random() * back_color.length);
+      let mixedColor = back_color.splice(color, 1)[0];
+      chooseColor.push(mixedColor);
+    }
+  </script>
+</body>
+</html>
