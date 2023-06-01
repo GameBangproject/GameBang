@@ -1,47 +1,43 @@
 .card {
     width: 100px;
     height: 150px;
-    background-color: #ccc;
-    border: 1px solid #999;
     display: inline-block;
     margin: 10px;
     cursor: pointer;
     perspective: 1000px;
 }
 
-.card .card-inner {
+.card_inner {
+    position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.3s;
+    transition: transform 1s;
     transform-style: preserve-3d;
 }
 
-.card:focus{
-      border: solid 1px green;
-}
-
-.card .card-inner.flipped {
+.card.flipped .card_inner {
     transform: rotateY(180deg);
 }
 
-.card .card-face {
+.card_front, .card_back {
+    position: absolute;
     width: 100%;
     height: 100%;
-    position: absolute;
     backface-visibility: hidden;
+    border: solid 1px #999
 }
 
-.card .card-front {
-    background-color: #f1f1f1;
+.card_front {
+    background: #999;
 }
 
-.card .card-back {
-    background-color: #333;
-    color: #fff;
+.card_front:hover {
+    border: solid 3px red;
+}
+
+.card_back {
     transform: rotateY(180deg);
-    text-align: center;
-    font-size: 24px;
-    line-height: 150px;
+    backface-visibility: hidden;
 }
 
 #score {

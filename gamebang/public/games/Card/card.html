@@ -10,19 +10,49 @@
   
 
   <script>
-    let x = 5;
-    let y = 4;
-    let back_color = [
+    let x = 5; // 게임판 가로넓이
+    let y = 4; // 게임판 세로넓이
+    let openCard = [];
+    let matchCard = 0;
+    let back_color = [ // 카드 뒷면 색상
       'red', 'red,', 'yellow', 'yellow', 'green', 'green', 'blue', 'blue',
-      'purple', 'purple', 'gray', 'gray', 'pink', 'pink', 'orange', 'orange',
+      'purple', 'purple', 'lightblue', 'lightblue', 'pink', 'pink', 'orange', 'orange',
       'aqua', 'aqua', 'brown', 'brown'
     ]
-    let chooseColor = [];
-    while (back_color.length > 0){
+    let chooseColor = []; // 무작위로 받은 색상 저장 배열
+    while (back_color.length > 0){ // 무작위 색상 뽑기
       let color = Math.floor(Math.random() * back_color.length);
       let mixedColor = back_color.splice(color, 1)[0];
       chooseColor.push(mixedColor);
     }
+
+    function cardSetting(x, y) { // 카드 초기 세팅
+      for (i = 0; i < x * y; i++){
+        let card = document.createElement("div");
+        card.className = 'card';
+        card.id = chooseColor[i];
+        let cardInner = document.createElement('div');
+        cardInner.className = 'card_inner';
+        let cardFront = document.createElement('div');
+        cardFront.className = 'card_front';
+        let cardBack = document.createElement('div');
+        cardBack.className = 'card_back';
+        cardBack.style.backgroundColor = chooseColor[i];
+        cardInner.appendChild(cardFront);
+        cardInner.appendChild(cardBack);
+        card.append(cardInner);
+        document.body.appendChild(card);
+
+        card.addEventListener('click', function() {
+          card.classList.toggle('flipped');
+        })
+      }
+    }
+
+    
+    
+
+    cardSetting(x, y);
   </script>
 </body>
 </html>
