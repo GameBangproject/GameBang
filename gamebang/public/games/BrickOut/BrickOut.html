@@ -21,7 +21,7 @@
     var paddleX = (canvas.width - paddleWidth) / 2; // 패들 X의 초기 위치
     var rightPressed = false; // 키 눌림 여부
     var leftPressed = false; // 키 눌림 여부
-    var paddlespeed = 7;
+    var paddlespeed = 4;
 
     // brick
     var brickRowCount = 10; //벽돌의 열 수
@@ -78,7 +78,7 @@
                 b.status = 0; // 블록 파괴
               }
             }
-            if (y + ballRadius >= b.y && b.y > y  || y - ballRadius <= b.y + brickHeight && b.y+brickHeight < y) {
+            else if (y + ballRadius >= b.y && b.y > y  || y - ballRadius <= b.y + brickHeight && b.y+brickHeight < y) {
               if (b.x < x && x < b.x + brickWidth) {
                 dy = -dy;
                 b.status = 0;
@@ -150,12 +150,26 @@
       else if (y + dy > canvas.height - ballRadius) { // 공이 바닥에 닿을때
         if (x > paddleX && x < paddleX + paddleWidth) { // 만약 패달의 가로 안에 공이 위치하면
           dy = -dy; // 진행방향 반전
+          if (x<paddleX + paddleWidth/5){
+            dx = -3;
+          }
+          else if (x<paddleX + paddleWidth/5*4){
+            if (dx<0){
+              dx = -2;
+            }
+            else{
+              dx = 2;
+            }
+          }
+          else{
+            dx = 3;
+          }
         } 
         else { // 페달에 맞추지 못했다면 게임오버
           dy = -dy;
-          //alert("GAME OVER");
-          //document.location.reload();
-          //clearInterval(interval); // 크롬 브라우저가 필요.
+          alert("GAME OVER");
+          document.location.reload();
+          clearInterval(interval); // 크롬 브라우저가 필요.
         }
       }
 
@@ -173,7 +187,7 @@
     }
 
     // 반복해서 draw 하기
-    var interval = setInterval(draw, 2);
+    var interval = setInterval(draw, 7);
   </script>
 </body>
 
