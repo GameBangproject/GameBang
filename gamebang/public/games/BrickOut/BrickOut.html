@@ -1,9 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>brick game</title>
+  <style>
+    @import url("BrickOut.css");
+  </style>
+</head>
 
 <body>
-  <canvas id="myCanvas" width="500" height="600" style="border: 1px solid black"></canvas>
+  <div id="title">
+    제목이요
+  </div>
 
+  <div id="canvas_cover">
+  <canvas id="myCanvas" width="500" height="600" style="border: 5px solid #0095dd"></canvas>
   <script>
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
@@ -25,14 +39,15 @@
 
     // brick
     var brickRowCount = 10; //벽돌의 열 수
-    var brickColumnCount = 8; // 벽돌의 행 수
+    var brickColumnCount = 12; // 벽돌의 행 수
     var brickWidth = canvas.width / brickRowCount; // 벽돌 크기
     var brickHeight = 20; // 벽돌 높이
     var brickPadding = 0; // 벽돌 패딩값
-    var brickOffsetTop = 30; // 
+    var brickOffsetTop = 60; // 
     var brickOffsetLeft = 0; //
     var bricks = []; // 벽돌 array
 
+    var flag = 7;
     // 벽돌 배열 생성
     for (var c = 0; c < brickColumnCount; c++) {
       bricks[c] = [];
@@ -104,10 +119,30 @@
       ctx.rect(
         paddleX,
         canvas.height - paddleHeight,
-        paddleWidth,
+        paddleWidth/5,
+        paddleHeight
+      );
+      ctx.fillStyle = "#d22e2e";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.rect(
+        paddleX + paddleWidth /5,
+        canvas.height - paddleHeight,
+        paddleWidth / 5 * 3,
         paddleHeight
       );
       ctx.fillStyle = "#0095DD";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.rect(
+        paddleX + paddleWidth/5*4 ,
+        canvas.height - paddleHeight,
+        paddleWidth/5,
+        paddleHeight
+      );
+      ctx.fillStyle = "#d22e2e";
       ctx.fill();
       ctx.closePath();
     }
@@ -130,6 +165,18 @@
         }
       }
     }
+
+    function allbreak(){
+      for (var c = 0; c<brickColumnCount;c++){
+        for (var r=0;r<brickRowCount;r++){
+          if (bricks[c][r].status!=0){
+            return 0;
+          }
+        }
+      }
+      return 1;
+    }
+
 
     // 게임판 draw 함수
     function draw() {
@@ -166,11 +213,21 @@
           }
         } 
         else { // 페달에 맞추지 못했다면 게임오버
-          dy = -dy;
+          //dy = -dy;
           alert("GAME OVER");
           document.location.reload();
           clearInterval(interval); // 크롬 브라우저가 필요.
         }
+      }
+
+      if (allbreak()){
+        flag--;
+      }
+
+      if (flag==0){
+        alert("YOU WIN !!!");
+        document.location.reload();
+        clearInterval(interval);
       }
 
       // 페달 이동 속도
@@ -189,6 +246,9 @@
     // 반복해서 draw 하기
     var interval = setInterval(draw, 7);
   </script>
+  </div>
+
+
 </body>
 
 </html>
