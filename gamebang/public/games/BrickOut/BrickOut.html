@@ -87,14 +87,14 @@
           var b = bricks[c][r]; // b 에 블록 할당
           if (b.status == 1) { // b가 부숴지지 않은 벽돌이고
 
-            if (x - ballRadius <= b.x + brickWidth && b.x + brickWidth < x || x + ballRadius >= b.x && b.x > x) { // 공의 왼쪽과 벽돌의 오른쪽이 닿으면
-              if (b.y < y && y < b.y + brickHeight) {
+            if (x - ballRadius <= b.x + brickWidth && b.x + brickWidth <= x || x + ballRadius >= b.x && b.x >= x) { // 공의 왼쪽과 벽돌의 오른쪽이 닿으면
+              if (b.y <= y && y <= b.y + brickHeight) {
                 dx = -dx;
                 b.status = 0; // 블록 파괴
               }
             }
-            else if (y + ballRadius >= b.y && b.y > y  || y - ballRadius <= b.y + brickHeight && b.y+brickHeight < y) {
-              if (b.x < x && x < b.x + brickWidth) {
+            else if (y + ballRadius >= b.y && b.y >= y  || y - ballRadius <= b.y + brickHeight && b.y+brickHeight <= y) {
+              if (b.x <= x && x <= b.x + brickWidth) {
                 dy = -dy;
                 b.status = 0;
               }
