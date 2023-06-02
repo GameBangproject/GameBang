@@ -63,7 +63,7 @@ const Footer = () => {
           onClick={() => setModalOpen(1)}
         ></button>
         <button
-          className="TetrisGameModalButton"
+          className="BrickGameModalButton"
           onClick={() => setModalOpen(2)}
         ></button>
         <button
