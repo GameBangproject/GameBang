@@ -1,15 +1,18 @@
+*{
+    z-index:0;
+}
 body {
     width: 600px;
     height: 750px;
     position:absolute;
-    top: 50%;
+    top: 56%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
 .card {
     width: 100px;
-    height: 150px;
+    height: 140px;
     display: inline-block;
     margin: 10px;
     cursor: pointer;
@@ -41,7 +44,7 @@ body {
 }
 
 .card_front:hover {
-    border: solid 3px red;
+    border: solid 3px rgb(183, 247, 254);
 }
 
 .card_back {
@@ -59,4 +62,46 @@ body {
 
 #game_start {
     display: block;
+}
+
+#gameover_text {
+    width: 500px;
+    color: rgba(255, 0, 0, 0.929);
+    position: absolute;
+    display: block;
+    text-align:center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    z-index: 1;
+    font:bold;
+}
+
+span{
+    font-size: 50px;
+    display: block;
+}
+
+#left {
+    display: flex;
+    justify-content: right;
+    font-size:18px;
+}
+
+#count {
+    display: flex;
+    justify-content: right;
+    font-size:18px;
+}
+
+#timer {
+    display: flex;
+    justify-content: left;
+    font-size:18px;
+}
+
+#wrap {
+    display: flex;
+    justify-content: space-between;
 }
