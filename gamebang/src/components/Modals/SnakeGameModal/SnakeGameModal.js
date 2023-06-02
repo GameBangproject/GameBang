@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
 import "./SnakeGameModal.css";
-import SnakeGameVideo from "../../videos/snakegame_video/SnakeGameVideo.mov";
+import SnakeGameVideo from "../../videos/SnakeGameVideo.mov";
 
 const SnakeGameModal = ({ setModalOpen }) => {
   const modalRef = useRef(null);

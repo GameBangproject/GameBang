@@ -38,7 +38,17 @@
   background-size: cover;
   background-position: center center;
   border-radius: 15px;
-  /* border: 1px solid lightgray; */
+  border: none;
+  margin-right: 10px;
+  width: 400px;
+  height: 250px;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+}
+.BrickGameModalButton {
+  background-image: url("../../resources/BrickGaemThumbnail.png");
+  background-size: contain;
+  background-position: center center;
+  border-radius: 15px;
   border: none;
   margin-right: 10px;
   width: 400px;
