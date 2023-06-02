@@ -20,7 +20,7 @@
     let count = 0;
     let left = 10;
     let back_color = [ // 카드 뒷면 색상
-      'red', 'red,', 'yellow', 'yellow', 'green', 'green', 'blue', 'blue',
+      'red', 'red', 'yellow', 'yellow', 'green', 'green', 'blue', 'blue',
       'purple', 'purple', 'lightblue', 'lightblue', 'pink', 'pink', 'orange', 'orange',
       'aqua', 'aqua', 'brown', 'brown'
     ]
@@ -61,7 +61,7 @@
                 matchCard.push(openCard[0]); // matchCard 배열에 추가
                 matchCard.push(openCard[1]);
                 openCard = []; // openCard 배열 초기화
-                if (matchCard.length === 12){ // 게임을 클리어 한 경우
+                if (matchCard.length === 20){ // 게임을 클리어 한 경우
                   game_Clear();
                 }
               }
@@ -78,10 +78,6 @@
           }
         })
       }
-    }
-
-    function game_Clear(){
-
     }
 
     function game_Start(){
