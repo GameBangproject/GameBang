@@ -1,3 +1,12 @@
+body {
+    width: 600px;
+    height: 750px;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .card {
     width: 100px;
     height: 150px;
@@ -36,6 +45,8 @@
 }
 
 .card_back {
+    display: flex;
+    align-items: center;
     transform: rotateY(180deg);
     backface-visibility: hidden;
     cursor: default;
