@@ -45,3 +45,7 @@
     font-size: 18px;
     margin-top: 10px;
 }
+
+#game_start {
+    display: block;
+}
