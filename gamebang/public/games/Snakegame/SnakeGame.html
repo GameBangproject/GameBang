@@ -3,7 +3,7 @@
   <head>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body onload="document.getElementById('highScore').innerText = '최고 점수 : ' + (highScores.length > 0 ? highScores[0] : 0);">
+  <body onload="document.getElementById('score').innerText = '최고 점수 : ' + (highScores.length > 0 ? highScores[0] : 0);">
   <body style="overflow: hidden">
     <span id="title">Snake Game</span>
     <div id = "ranking_box">
@@ -21,11 +21,9 @@
             </tr>
           </table>
         </div>
-   
-
         <div id="scoreBox">
-          <span id="score">현재 점수 : 0</span>
           <span id="score">최고 점수 : 0</span>
+          <span id="score">현재 점수 : 0</span>
         </div>
       </div>
     </div>
