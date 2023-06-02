@@ -13,13 +13,13 @@
 
 #canvas_cover {
     display: flex;
-    width: 500px;
-    height: 600px;
+    width: 600px;
+    height: 700px;
     position: absolute;
     left: 50%;
     right: 50%;
     top: 20%;
-    margin-left: -250px;
+    margin-left: -300px;
 }
 
 body {

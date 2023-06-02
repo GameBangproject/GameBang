@@ -17,8 +17,9 @@
   </div>
 
   <div id="canvas_cover">
-  <canvas id="myCanvas" width="500" height="600" style="border: 5px solid #0095dd"></canvas>
+  <canvas id="myCanvas" width="600" height="700" style="border: 5px solid #0095dd"></canvas>
   <script>
+
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
 
@@ -38,8 +39,16 @@
     var paddlespeed = 4;
 
     // brick
-    var brickRowCount = 10; //벽돌의 열 수
-    var brickColumnCount = 12; // 벽돌의 행 수
+    var brickRowCount = make_random_num(); //벽돌의 열 수
+    var brickColumnCount = Math.floor(Math.random()*(14-10)+10);
+    function make_random_num(){
+      for (;;){
+        var i = Math.floor(Math.random() * (20 - 6) + 6);
+        if (canvas.width%i==0){
+          return i;
+        }
+      };
+    } // 벽돌의 행 수
     var brickWidth = canvas.width / brickRowCount; // 벽돌 크기
     var brickHeight = 20; // 벽돌 높이
     var brickPadding = 0; // 벽돌 패딩값
