@@ -131,7 +131,7 @@
         paddleWidth/5,
         paddleHeight
       );
-      ctx.fillStyle = "#d22e2e";
+      ctx.fillStyle = "#ff7f7f";
       ctx.fill();
 
       ctx.beginPath();
@@ -141,7 +141,7 @@
         paddleWidth / 5 * 3,
         paddleHeight
       );
-      ctx.fillStyle = "#0095DD";
+      ctx.fillStyle = "#00AAFF";
       ctx.fill();
 
       ctx.beginPath();
@@ -151,13 +151,15 @@
         paddleWidth/5,
         paddleHeight
       );
-      ctx.fillStyle = "#d22e2e";
+      ctx.fillStyle = "#ff7f7f";
       ctx.fill();
       ctx.closePath();
     }
 
     // 벽돌 그리기
     function drawBricks() {
+      var colors = ["#ff7f7f","#f3cdad","#fff77f","#bae7af","#a9e1ed","#afc4e7","#cb9ffd"];
+      var i = 0;
       for (var c = 0; c < brickColumnCount; c++) {
         for (var r = 0; r < brickRowCount; r++) {
           if (bricks[c][r].status == 1) { // 살아 있는 벽돌이라면 그리기
@@ -167,10 +169,11 @@
             bricks[c][r].y = brickY;
             ctx.beginPath();
             ctx.rect(brickX, brickY, brickWidth, brickHeight);
-            ctx.fillStyle = "#0095DD";
+            ctx.fillStyle = colors[i];
             ctx.fill();
             ctx.closePath();
           }
+          i = (i + 1) % 7;
         }
       }
     }
