@@ -5,7 +5,7 @@ body {
     width: 600px;
     height: 750px;
     position:absolute;
-    top: 56%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: aliceblue;
@@ -116,4 +116,18 @@ body {
     width: 400px;
     height: 400px;
     visibility: hidden;
+}
+
+@font-face {
+    font-family: 'Fruit font';
+    src: url(Card_font/EF_jejudoldam\(맥용_OTF\).otf);
+}
+
+#title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    font-family: 'Fruit font';
+    color:rgb(230, 129, 218)
 }

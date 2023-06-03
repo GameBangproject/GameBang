@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="card.css">
 </head>
 <body>
+  <div id="title">Fruit Flip</div>
   <div id="count">시도 횟수: 0</div>
   <div id="wrap">
     <div id="timer">Time: 60</div>
@@ -25,6 +26,14 @@
     let wrong_sound = new Audio();
     correct_sound.src = "Card_audios/026_띠딩2.mp3";
     wrong_sound.src = "Card_audios/063_삐삑 (오답 -짧은).mp3";
+    wrong_sound.volume = 0.4;
+    let arr_flip = [];
+    for (i = 0; i < 30; i++){
+      let flip = new Audio();
+      flip.src = "Card_audios/cardTakeOutPackage1.mp3";
+      flip.volume = 0.2;
+      arr_flip.push(flip);
+    }
     function cardSetting(x, y) { // 카드 초기 세팅
       let openCard = [];
       let matchCard = [];
@@ -65,13 +74,19 @@
         
         card.addEventListener('click', function() { // 카드 뒤집는 이벤트 리스너
           if (click && !openCard.includes(card) && !matchCard.includes(card)){ // 클릭이 true이고 오픈 또는 매치된 카드가 아닌경우
+            for (i = 0; i < arr_flip.length; i++){
+              if (arr_flip[i].paused) {
+                arr_flip[i].play();
+                break;
+              }
+            }
             card.classList.toggle('flipped'); // class에 flipped 적용
             openCard.push(card); // openCard 배열에 추가
             if (openCard.length === 2){ // openCard 배열의 길이가 2인경우
               count++;
               document.getElementById('count').innerText = '시도 횟수: ' + count;
               if (openCard[0].id === openCard[1].id){ // 두 원소의 색상이 같으면
-                correct_sound.play();
+                setTimeout(correct_sound.play(), 4000);
                 click = false;
                 setTimeout(function(){
                   click = true;
@@ -86,7 +101,7 @@
                 }
               }
               else{ // 두 원소의 색상이 다르면
-                setTimeout(wrong_sound.play(), 400);
+                setTimeout(wrong_sound.play(), 4000);
                 click = false; // 클릭 불가
                 setTimeout(function (){
                   openCard[0].classList.remove('flipped'); // flipped class제거
@@ -113,6 +128,12 @@
       document.querySelectorAll('.card').forEach(function(card,index){
         setTimeout(function(){
           card.classList.add('flipped');
+          for (i = 0; i < arr_flip.length; i++) {
+            if (arr_flip[i].paused) {
+              arr_flip[i].play();
+              break;
+            }
+          }
         }, 1000 + 200 * index);
       });
 
