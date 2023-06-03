@@ -9,6 +9,46 @@
   <style>
     @import url("BrickOut.css");
   </style>
+  <script>
+   const soundSrc = [
+      "BrickOut_audios/gameover.mp3",
+      "BrickOut_audios/brickcollision.mp3",
+      "BrickOut_audios/paddlecollision.mp3",
+      "BrickOut_audios/paddleside.mp3",
+      "BrickOut_audios/win.mp3"
+    ];
+
+    // 각각의 사운드에 대한 배열
+    const gameover_sounds = [];
+    const brickcollision_sounds = [];
+    const paddlecollision_sounds = [];
+    const paddleside_sounds = [];
+    const win_sounds = [];
+
+    const soundArrays = [
+      gameover_sounds,
+      brickcollision_sounds,
+      paddlecollision_sounds,
+      paddleside_sounds,
+      win_sounds
+    ];
+
+    // 각 사운드를 각각의 배열에 10번 반복해서 추가
+    for (let i = 0; i < soundSrc.length; i++) {
+      for (let j = 0; j < 10; j++) {
+        const sound = new Audio();
+        sound.src = soundSrc[i];
+        // 크롬의 예외처리
+        sound.addEventListener('ended', function () {
+          if (window.chrome) { this.load(); }
+          this.pause();
+        })
+        soundArrays[i].push(sound);
+      }
+    }
+
+    
+  </script>
 </head>
 
 <body>
@@ -29,7 +69,7 @@
 
       // Paddle
       var paddleHeight = 10; // paddle 세로
-      var paddleWidth = 75; // paddle 가로
+      var paddleWidth = 85; // paddle 가로
       var paddleX = (canvas.width - paddleWidth) / 2; // 패들 X의 초기 위치
       var rightPressed = false; // 키 눌림 여부
       var leftPressed = false; // 키 눌림 여부
@@ -92,7 +132,6 @@
             var b = bricks[c][r]; // b 에 블록 할당
             if (b.status == 1) {
               // b가 부숴지지 않은 벽돌이고
-
               if (
                 (x - ballRadius <= b.x + brickWidth &&
                   b.x + brickWidth <= x) ||
@@ -101,6 +140,12 @@
                 // 공의 왼쪽과 벽돌의 오른쪽이 닿으면
                 if (b.y <= y && y <= b.y + brickHeight) {
                   dx = -dx;
+                  for (let i = 0; i < brickcollision_sounds.length; i++) {
+                    if (brickcollision_sounds[i].paused) { // 재생중이 아닌 Audio객체를 찾아서
+                      brickcollision_sounds[i].play(); // 1회만 재생하고
+                      break; // 반복문을 나간다.
+                    }
+                  }
                   b.status = 0; // 블록 파괴
                 }
               } else if (
@@ -111,6 +156,12 @@
                 if (b.x <= x && x <= b.x + brickWidth) {
                   dy = -dy;
                   b.status = 0;
+                  for (let i = 0; i < brickcollision_sounds.length; i++) {
+                    if (brickcollision_sounds[i].paused) { // 재생중이 아닌 Audio객체를 찾아서
+                      brickcollision_sounds[i].play(); // 1회만 재생하고
+                      break; // 반복문을 나간다.
+                    }
+                  }
                 }
               }
             }
@@ -131,7 +182,7 @@
       function drawPaddle() {
         ctx.beginPath();
         ctx.rect(
-          paddleX,
+          paddleX+5,
           canvas.height - paddleHeight,
           paddleWidth / 5,
           paddleHeight
@@ -153,7 +204,7 @@
         ctx.rect(
           paddleX + paddleWidth / 5 * 4,
           canvas.height - paddleHeight,
-          paddleWidth / 5,
+          paddleWidth / 5- 5,
           paddleHeight
         );
         ctx.fillStyle = "#ff7f7f";
@@ -217,16 +268,23 @@
           if (x > paddleX && x < paddleX + paddleWidth) {
             // 만약 패달의 가로 안에 공이 위치하면
             dy = -dy; // 진행방향 반전
-            if (x < paddleX + paddleWidth / 5) {
-              dx = -3;
-            } else if (x < paddleX + (paddleWidth / 5) * 4) {
+            if (x < paddleX + paddleWidth / 5) { // 왼쪽 끝에 맞으면 
+              paddleside_sounds[0].play();
+              dx = -2.5;
+              dy = -1.5;
+            } else if (x < paddleX + (paddleWidth / 5) * 4) { // 중간에 맞으면
+              paddlecollision_sounds[0].play();
               if (dx < 0) {
                 dx = -2;
+                dy = -2;
               } else {
                 dx = 2;
+                dy = -2;
               }
-            } else {
-              dx = 3;
+            } else { // 오른쪽 끝에 맞으면
+              paddleside_sounds[0].play();
+              dx = 2.5;
+              dy = -1.5;
             }
           } else {
             // 페달에 맞추지 못했다면 게임오버
