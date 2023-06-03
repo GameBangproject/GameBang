@@ -1,27 +1,26 @@
-
 #title {
-    display: flex;
-    width: 500px;
-    height: 180px;
-    position: absolute;
-    left: 50%;
-    right: 50%;
-    margin-left: -250px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  width: 500px;
+  height: 180px;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  margin-left: -250px;
+  justify-content: center;
+  align-items: center;
 }
 
 #canvas_cover {
-    display: flex;
-    width: 600px;
-    height: 700px;
-    position: absolute;
-    left: 50%;
-    right: 50%;
-    top: 20%;
-    margin-left: -300px;
+  display: flex;
+  width: 600px;
+  height: 700px;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 20%;
+  margin-left: -300px;
 }
 
 body {
-    background-color: beige;
+  background-color: beige;
 }

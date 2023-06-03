@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
 import "./BrickOutModal.css";
-import SnakeGameVideo from "../../videos/snakegame_video/SnakeGameVideo.mov";
+import BrickGameVideo from "../../videos/BrickGameVideo.mov";
 
 const BrickOutModal = ({ setModalOpen }) => {
   const modalRef = useRef(null);
@@ -24,16 +24,16 @@ const BrickOutModal = ({ setModalOpen }) => {
     <div className="modal" ref={modalRef}>
       <div className="modal-content">
         <div className="game-demo">
-          <video src={SnakeGameVideo} controls></video>
+          <video src={BrickGameVideo} controls></video>
         </div>
         <div className="game-description-play">
           <div className="game-description">
             <h1 style={{ marginTop: "0px", marginBottom: "0px" }}>Brickout</h1>
             <hr></hr>
             <span style={{ fontSize: "20px" }}>
-              <strong>Brickout 게임은</strong>
-              플레이어가 패들(또는 막대)를 좌우로 움직여 공을 튕겨내어 화면
-              상단의 벽돌들을 파괴해야 합니다. <br />
+              <strong>Brickout 게임은</strong> 플레이어가 패들(또는 막대)를
+              좌우로 움직여 공을 튕겨내어 화면 상단의 벽돌들을 파괴해야 합니다.{" "}
+              <br />
               <br />
               공은 패들에 튕겨져 다시 위쪽으로 향하며, 벽돌을 맞추면 벽돌이
               사라집니다. 목표는 모든 벽돌을 제거하는 것입니다. <br />
