@@ -5,48 +5,58 @@
   <link rel="stylesheet" href="card.css">
 </head>
 <body>
-  <div id="left">남은 개수: 10</div>
   <div id="count">시도 횟수: 0</div>
-  <div id="game-container"></div>
-  <button id="game_start" onclick="game_Start()">Game Start</button>
-  
+  <div id="wrap">
+    <div id="timer">Time: 60</div>
+    <div id="left">남은 개수: 10</div>
+  </div>  
+  <div id="gameover_text"></div>
+  <div id="container"></div>
 
   <script>
     let x = 5; // 게임판 가로넓이
     let y = 4; // 게임판 세로넓이
-    let openCard = [];
-    let matchCard = [];
     let click = false;
-    let count = 0;
-    let left = 10;
-    let back_color = [ // 카드 뒷면 색상
-      'red', 'red', 'yellow', 'yellow', 'green', 'green', 'blue', 'blue',
-      'purple', 'purple', 'lightblue', 'lightblue', 'pink', 'pink', 'orange', 'orange',
-      'aqua', 'aqua', 'brown', 'brown'
-    ]
-    let chooseColor = []; // 무작위로 받은 색상 저장 배열
-    while (back_color.length > 0){ // 무작위 색상 뽑기
-      let color = Math.floor(Math.random() * back_color.length);
-      let mixedColor = back_color.splice(color, 1)[0];
-      chooseColor.push(mixedColor);
-    }
+
+    
 
     function cardSetting(x, y) { // 카드 초기 세팅
+      let openCard = [];
+      let matchCard = [];
+      let count = 0;
+      let left = 10;
+      let back_img = [ // 카드 뒷면 이미지
+      'Card_images/귤.png', 'Card_images/귤.png', 'Card_images/딸기.png', 'Card_images/딸기.png', 'Card_images/바나나.png', 'Card_images/바나나.png', 'Card_images/사과.png', 'Card_images/사과.png',
+      'Card_images/수박.png', 'Card_images/수박.png', 'Card_images/오랜지.png', 'Card_images/오랜지.png', 'Card_images/체리.png', 'Card_images/체리.png', 'Card_images/키위.png', 'Card_images/키위.png',
+      'Card_images/파인애플.png', 'Card_images/파인애플.png', 'Card_images/포도.png', 'Card_images/포도.png'
+      ]
+      let chooseImg = []; // 무작위로 받은 이미지 저장 배열
+      while (back_img.length > 0){ // 무작위 이미지 뽑기
+        let img = Math.floor(Math.random() * back_img.length);
+        let mixedImg = back_img.splice(img, 1)[0];
+        chooseImg.push(mixedImg);
+      }
       for (i = 0; i < x * y; i++){
         let card = document.createElement("div");
         card.className = 'card';
-        card.id = chooseColor[i];
+        card.id = chooseImg[i];
         let cardInner = document.createElement('div');
         cardInner.className = 'card_inner';
         let cardFront = document.createElement('div');
         cardFront.className = 'card_front';
         let cardBack = document.createElement('div');
         cardBack.className = 'card_back';
-        cardBack.style.backgroundColor = chooseColor[i];
+        let url = chooseImg[i];
+        let image = new Image();
+        image.src = url;
+        image.style.width = '100px';
+        image.style.height = '100px';
+        cardBack.appendChild(image);
+        document.getElementById('container').appendChild(card);
         cardInner.appendChild(cardFront);
         cardInner.appendChild(cardBack);
         card.append(cardInner);
-        document.body.appendChild(card);
+
         
         card.addEventListener('click', function() { // 카드 뒤집는 이벤트 리스너
           if (click && !openCard.includes(card) && !matchCard.includes(card)){ // 클릭이 true이고 오픈 또는 매치된 카드가 아닌경우
@@ -55,7 +65,11 @@
             if (openCard.length === 2){ // openCard 배열의 길이가 2인경우
               count++;
               document.getElementById('count').innerText = '시도 횟수: ' + count;
-              if (openCard[0].querySelector('.card_back').style.backgroundColor === openCard[1].querySelector('.card_back').style.backgroundColor){ // 두 원소의 색상이 같으면
+              if (openCard[0].id === openCard[1].id){ // 두 원소의 색상이 같으면
+                click = false;
+                setTimeout(function(){
+                  click = true;
+                }, 1000);
                 left--;
                 document.getElementById('left').innerText = '남은 개수: ' + left;
                 matchCard.push(openCard[0]); // matchCard 배열에 추가
@@ -81,6 +95,13 @@
     }
 
     function game_Start(){
+      cardSetting(x, y);
+      document.getElementById('gameover_text').innerHTML = '';
+      count = 0;
+      let time = 60000;
+      document.getElementById('left').innerHTML = '남은 개수: 10';
+      document.getElementById('count').innerHTML = '시도 횟수: 0';
+      document.getElementById('timer').innerHTML = 'Time: 60';
       document.querySelectorAll('.card').forEach(function(card,index){
         setTimeout(function(){
           card.classList.add('flipped');
@@ -92,19 +113,48 @@
           card.classList.remove('flipped');
         });
         click = true;
+        timer();
       }, 8000);
     }
 
     function game_Clear() {
       alert("게임 클리어");
+      click = false;
+      clearInterval(playtime);
     }
 
+    let playtime;
+    function timer(){
+      let time = 60000;
+      playtime = setInterval(function(){
+        time -= 1000;
+        document.getElementById('timer').innerText = 'Time: ' + (time / 1000);
+        if (time === 0){
+          clearInterval(playtime);
+          gameOver();
+        }
+      }, 1000);
+    }
 
+    function gameOver(){
+      click = false;
+      document.getElementById('gameover_text').innerHTML = "<span>Game Over</span><br>Press 'Space Bar' to retry";
+      document.addEventListener('keydown', spaceBar);
+    }
 
-    
-    
-    cardSetting(x, y);
+    function spaceBar(event){
+      if (event.keyCode === 32){
+        restartGame();
+      }
+    }
 
+    function restartGame(){
+      document.removeEventListener('keydown', spaceBar);
+      document.getElementById('container').innerHTML = '';
+      game_Start();
+    }
+
+    game_Start();
   </script>
 </body>
 </html>

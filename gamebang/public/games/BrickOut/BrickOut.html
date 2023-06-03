@@ -183,59 +183,7 @@
         }
       }
 
-      // 패달 그리기
-      function drawPaddle() {
-        ctx.beginPath();
-        ctx.rect(
-          paddleX,
-          canvas.height - paddleHeight,
-          paddleWidth / 5,
-          paddleHeight
-        );
-        ctx.fillStyle = "#d22e2e";
-        ctx.fill();
 
-        ctx.beginPath();
-        ctx.rect(
-          paddleX + paddleWidth / 5,
-          canvas.height - paddleHeight,
-          (paddleWidth / 5) * 3,
-          paddleHeight
-        );
-        ctx.fillStyle = "#0095DD";
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.rect(
-          paddleX + (paddleWidth / 5) * 4,
-          canvas.height - paddleHeight,
-          paddleWidth / 5,
-          paddleHeight
-        );
-        ctx.fillStyle = "#d22e2e";
-        ctx.fill();
-        ctx.closePath();
-      }
-
-      // 벽돌 그리기
-      function drawBricks() {
-        for (var c = 0; c < brickColumnCount; c++) {
-          for (var r = 0; r < brickRowCount; r++) {
-            if (bricks[c][r].status == 1) {
-              // 살아 있는 벽돌이라면 그리기
-              var brickX = r * (brickWidth + brickPadding) + brickOffsetLeft;
-              var brickY = c * (brickHeight + brickPadding) + brickOffsetTop;
-              bricks[c][r].x = brickX;
-              bricks[c][r].y = brickY;
-              ctx.beginPath();
-              ctx.rect(brickX, brickY, brickWidth, brickHeight);
-              ctx.fillStyle = "#0095DD";
-              ctx.fill();
-              ctx.closePath();
-            }
-          }
-        }
-      }
 
       function allbreak() {
         for (var c = 0; c < brickColumnCount; c++) {
