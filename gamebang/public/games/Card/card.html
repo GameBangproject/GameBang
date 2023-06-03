@@ -12,14 +12,19 @@
   </div>  
   <div id="gameover_text"></div>
   <div id="container"></div>
+  <img src="Card_images/heart.png"  alt="하트 이미지" class="clear_heart">
+  <div class="clear_heart" style="display: flex; justify-content: center; align-items: center; font-size:45px">
+    <p style="margin-top:15px; text-align:center;">Congratulations!!<br><span style="font-size:25px">Press 'Space Bar' to retry</span></p>
+  </div>
 
   <script>
     let x = 5; // 게임판 가로넓이
     let y = 4; // 게임판 세로넓이
     let click = false;
-
-    
-
+    let correct_sound = new Audio();
+    let wrong_sound = new Audio();
+    correct_sound.src = "Card_audios/026_띠딩2.mp3";
+    wrong_sound.src = "Card_audios/063_삐삑 (오답 -짧은).mp3";
     function cardSetting(x, y) { // 카드 초기 세팅
       let openCard = [];
       let matchCard = [];
@@ -66,6 +71,7 @@
               count++;
               document.getElementById('count').innerText = '시도 횟수: ' + count;
               if (openCard[0].id === openCard[1].id){ // 두 원소의 색상이 같으면
+                correct_sound.play();
                 click = false;
                 setTimeout(function(){
                   click = true;
@@ -80,6 +86,7 @@
                 }
               }
               else{ // 두 원소의 색상이 다르면
+                setTimeout(wrong_sound.play(), 400);
                 click = false; // 클릭 불가
                 setTimeout(function (){
                   openCard[0].classList.remove('flipped'); // flipped class제거
@@ -95,6 +102,7 @@
     }
 
     function game_Start(){
+      click = false;
       cardSetting(x, y);
       document.getElementById('gameover_text').innerHTML = '';
       count = 0;
@@ -117,13 +125,23 @@
       }, 8000);
     }
 
-    function game_Clear() {
-      alert("게임 클리어");
-      click = false;
-      clearInterval(playtime);
+    function clearHeart() {
+      let heart_text = document.getElementsByClassName('clear_heart')
+      for (i = 0; i < heart_text.length; i++){
+        heart_text[i].style.visibility = 'visible';
+      }
     }
 
     let playtime;
+
+    function game_Clear() {
+      setTimeout(clearHeart, 1000);
+      click = false;
+      clearInterval(playtime);
+      document.addEventListener('keydown', spaceBar);
+    }
+
+
     function timer(){
       let time = 60000;
       playtime = setInterval(function(){
@@ -138,7 +156,7 @@
 
     function gameOver(){
       click = false;
-      document.getElementById('gameover_text').innerHTML = "<span>Game Over</span><br>Press 'Space Bar' to retry";
+      document.getElementById('gameover_text').innerHTML = "<span id='textGameOver'>Game Over</span><br>Press 'Space Bar' to retry";
       document.addEventListener('keydown', spaceBar);
     }
 
@@ -149,6 +167,10 @@
     }
 
     function restartGame(){
+      let heart_text = document.getElementsByClassName('clear_heart')
+      for (i = 0; i < heart_text.length; i++){
+        heart_text[i].style.visibility = 'hidden';
+      }
       document.removeEventListener('keydown', spaceBar);
       document.getElementById('container').innerHTML = '';
       game_Start();
