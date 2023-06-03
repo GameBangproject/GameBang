@@ -8,6 +8,7 @@ body {
     top: 56%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background-color: aliceblue;
 }
 
 .card {
@@ -40,11 +41,11 @@ body {
 }
 
 .card_front {
-    background: #999;
+    background: #d7ef9f;
 }
 
 .card_front:hover {
-    border: solid 3px rgb(183, 247, 254);
+    border: solid 3px rgb(254, 183, 208);
 }
 
 .card_back {
@@ -53,6 +54,7 @@ body {
     transform: rotateY(180deg);
     backface-visibility: hidden;
     cursor: default;
+    background-color: white
 }
 
 #score {
@@ -78,7 +80,7 @@ body {
     font:bold;
 }
 
-span{
+#textGameOver{
     font-size: 50px;
     display: block;
 }
@@ -104,4 +106,14 @@ span{
 #wrap {
     display: flex;
     justify-content: space-between;
+}
+
+.clear_heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    visibility: hidden;
 }
