@@ -10,7 +10,7 @@
     @import url("BrickOut.css");
   </style>
   <script>
-   const soundSrc = [
+    const soundSrc = [
       "BrickOut_audios/gameover.mp3",
       "BrickOut_audios/brickcollision.mp3",
       "BrickOut_audios/paddlecollision.mp3",
@@ -47,7 +47,7 @@
       }
     }
 
-    
+
   </script>
 </head>
 
@@ -169,20 +169,20 @@
         }
       }
 
-    // 공 그리기
-    function drawBall() {
-      ctx.beginPath();
-      ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-      ctx.fillStyle = "#0095DD";
-      ctx.fill();
-      ctx.closePath();
-    }
+      // 공 그리기
+      function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+      }
 
       // 패달 그리기
       function drawPaddle() {
         ctx.beginPath();
         ctx.rect(
-          paddleX+5,
+          paddleX + 5,
           canvas.height - paddleHeight,
           paddleWidth / 5,
           paddleHeight
@@ -204,7 +204,7 @@
         ctx.rect(
           paddleX + paddleWidth / 5 * 4,
           canvas.height - paddleHeight,
-          paddleWidth / 5- 5,
+          paddleWidth / 5 - 5,
           paddleHeight
         );
         ctx.fillStyle = "#ff7f7f";
@@ -235,7 +235,7 @@
       }
 
 
-
+      // 클리어 조건 판독
       function allbreak() {
         for (var c = 0; c < brickColumnCount; c++) {
           for (var r = 0; r < brickRowCount; r++) {
@@ -246,6 +246,31 @@
         }
         return 1;
       }
+
+      var gameOver = false;
+      // 게임 오버 메시지를 캔버스에 출력하는 함수
+      function drawGameOver() {
+        ctx.font = "bold 40px Arial";
+        ctx.fillStyle = "red";
+        ctx.fillText("GAME OVER", canvas.width / 2 - 125, canvas.height /2);
+        ctx.fillText("Press Spacebar to Continue", canvas.width / 2 - 260, canvas.height/2+50);
+      }
+
+      function drawWin() {
+          // Create gradient
+          var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+          gradient.addColorStop("0.2", "red");
+          gradient.addColorStop("0.5", "yellow");
+          gradient.addColorStop("0.5", "green");
+          gradient.addColorStop("0.75", "blue");
+          gradient.addColorStop("1.0", "purple");
+
+          // Apply gradient to text
+          ctx.font = "bold 40px Arial";
+          ctx.fillStyle = gradient;
+          ctx.fillText("YEAH!! YOU WIN!!!", canvas.width / 2 - 175, canvas.height / 2);
+        }
+
 
       // 게임판 draw 함수
       function draw() {
@@ -288,20 +313,20 @@
             }
           } else {
             // 페달에 맞추지 못했다면 게임오버
-            //dy = -dy;
-            alert("GAME OVER");
-            document.location.reload();
-            clearInterval(interval); // 크롬 브라우저가 필요.
+            dx = 0;
+            dy = 0;
+            gameover_sounds[0].play();
+            drawGameOver(); // 게임오버 출력
+            gameOver = true;
+            clearInterval(interval); // 게임 인터벌 삭제
           }
         }
-
-        if (allbreak()) {
+        if (allbreak()) { // 벽돌이 다 깨졌다면
           flag--;
-        }
-
+        } // 벽돌이 깨진 후에 출력하기 위한 조건
         if (flag == 0) {
-          alert("YOU WIN !!!");
-          document.location.reload();
+          win_sounds[0].play();
+          drawWin();
           clearInterval(interval);
         }
 
@@ -318,6 +343,14 @@
         x += dx;
         y += dy;
       }
+
+      // 게임 오버 상태에서 spacebar를 누를 경우 게임 재시작
+        document.body.onkeyup = function (e) {
+          if (e.keyCode == 32 && gameOver || e.keyCode == 32 && flag==0) {
+            // 게임 상태 초기화 코드...
+            document.location.reload(); // 페이지 새로고침으로 게임 재시작
+          }
+        }
 
       // 반복해서 draw 하기
       var interval = setInterval(draw, 7);
