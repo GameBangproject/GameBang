@@ -43,9 +43,21 @@
   width: 400px;
   height: 250px;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
 }
 .BrickGameModalButton {
   background-image: url("../../resources/BrickGaemThumbnail.png");
+  background-size: contain;
+  background-position: center center;
+  border-radius: 15px;
+  border: none;
+  margin-right: 10px;
+  width: 400px;
+  height: 250px;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+}
+.CardModalButton {
   background-size: contain;
   background-position: center center;
   border-radius: 15px;
