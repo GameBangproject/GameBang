@@ -15,6 +15,7 @@ const Footer = () => {
   const modalRef = useRef(null);
   const containerRef = useRef(null);
 
+  // 각 게임에 대한 비디오 참조와 hover 상태를 저장
   const snakeGameVideoRef = useRef();
   const brickGameVideoRef = useRef();
   const cardGameVideoRef = useRef();
@@ -23,6 +24,8 @@ const Footer = () => {
   const [isBrickGameHovered, setIsBrickGameHovered] = useState(false);
   const [isCardGameHovered, setIsCardGameHovered] = useState(false);
 
+  // 마우스가 각 게임의 버튼 위에 있을 때와 없을 때의 이벤트 핸들러를 정의
+  // 마우스가 버튼 위에 있을 때는 해당 게임의 비디오를 재생하고, 없을 때는 일시정지
   const handleMouseEnterSnakeGame = () => {
     setIsSnakeGameHovered(true);
     snakeGameVideoRef.current.play();
@@ -53,13 +56,16 @@ const Footer = () => {
     cardGameVideoRef.current.pause();
   };
 
+  // 모달 외부를 클릭했을 때 모달을 닫는 이벤트 핸들러
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       setModalOpen(0);
     }
   };
 
+  // useEffect를 이용해 modalOpen 상태가 변경될 때마다 적절한 동작을 수행
   useEffect(() => {
+    // modalOpen 상태에 따라 애니메이션을 재생하거나 일시정지
     if (containerRef.current) {
       containerRef.current.style.animationPlayState = modalOpen
         ? "paused"
@@ -68,15 +74,17 @@ const Footer = () => {
     console.log("Modal open state: ", modalOpen);
   }, [modalOpen]);
 
+  // 컴포넌트가 마운트되면 이미지 루프를 시작하고, 클릭 이벤트 리스너를 추가
   useEffect(() => {
     startImageLoop();
     document.addEventListener("mousedown", handleClickOutside);
-
+    // 컴포넌트가 언마운트되면 클릭 이벤트 리스너를 제거
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
+  // 이미지 루프 함수
   function startImageLoop() {
     const container = containerRef.current;
     const buttons = container.querySelectorAll(".modalButton");

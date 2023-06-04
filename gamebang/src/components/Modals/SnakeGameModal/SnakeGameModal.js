@@ -24,7 +24,7 @@ const SnakeGameModal = ({ setModalOpen }) => {
     <div className="modal" ref={modalRef}>
       <div className="modal-content">
         <div className="game-demo">
-          <video src={SnakeGameVideo} controls></video>
+          <video src={SnakeGameVideo} controls autoPlay></video>
         </div>
         <div className="game-description-play">
           <div className="game-description">

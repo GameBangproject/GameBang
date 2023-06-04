@@ -24,15 +24,17 @@ const CardModal = ({ setModalOpen }) => {
     <div className="modal" ref={modalRef}>
       <div className="modal-content">
         <div className="game-demo">
-          <video src={CardGameVideo} controls></video>
+          <video src={CardGameVideo} controls autoPlay></video>
         </div>
         <div className="game-description-play">
           <div className="game-description">
-            <h1 style={{ marginTop: "0px", marginBottom: "0px" }}>Fruit Flip</h1>
+            <h1 style={{ marginTop: "0px", marginBottom: "0px" }}>
+              Fruit Flip
+            </h1>
             <hr></hr>
             <span style={{ fontSize: "20px" }}>
-              <strong>Fruit Flip</strong>은 메모리 카드 뒤집기 게임으로서, 각각의
-              카드 뒷면에 과일 이미지가 부착되어 있습니다. <br />
+              <strong>Fruit Flip</strong>은 메모리 카드 뒤집기 게임으로서,
+              각각의 카드 뒷면에 과일 이미지가 부착되어 있습니다. <br />
               <br />
               게임의 목적은 플레이어가 카드를 뒤집어 동일한 과일 이미지를 가진
               두 카드를 찾아내는 것입니다.
