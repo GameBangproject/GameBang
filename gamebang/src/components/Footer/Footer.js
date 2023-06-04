@@ -24,36 +24,41 @@ const Footer = () => {
   const [isBrickGameHovered, setIsBrickGameHovered] = useState(false);
   const [isCardGameHovered, setIsCardGameHovered] = useState(false);
 
+  const handleVideo = (videoRef, shouldPlay) => {
+    if (!videoRef.current.paused === shouldPlay) {
+      shouldPlay ? videoRef.current.play() : videoRef.current.pause();
+    }
+  };
   // 마우스가 각 게임의 버튼 위에 있을 때와 없을 때의 이벤트 핸들러를 정의
   // 마우스가 버튼 위에 있을 때는 해당 게임의 비디오를 재생하고, 없을 때는 일시정지
   const handleMouseEnterSnakeGame = () => {
     setIsSnakeGameHovered(true);
-    snakeGameVideoRef.current.play();
+    handleVideo(snakeGameVideoRef, true);
   };
 
   const handleMouseLeaveSnakeGame = () => {
     setIsSnakeGameHovered(false);
-    snakeGameVideoRef.current.pause();
+    handleVideo(snakeGameVideoRef, false);
   };
 
   const handleMouseEnterBrickGame = () => {
     setIsBrickGameHovered(true);
-    brickGameVideoRef.current.play();
+    handleVideo(brickGameVideoRef, true);
   };
 
   const handleMouseLeaveBrickGame = () => {
     setIsBrickGameHovered(false);
-    brickGameVideoRef.current.pause();
+    handleVideo(brickGameVideoRef, false);
   };
 
   const handleMouseEnterCardGame = () => {
     setIsCardGameHovered(true);
-    cardGameVideoRef.current.play();
+    handleVideo(cardGameVideoRef, true);
   };
 
   const handleMouseLeaveCardGame = () => {
     setIsCardGameHovered(false);
-    cardGameVideoRef.current.pause();
+    handleVideo(cardGameVideoRef, false);
   };
 
   // 모달 외부를 클릭했을 때 모달을 닫는 이벤트 핸들러
