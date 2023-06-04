@@ -7,23 +7,54 @@ import BrickOutModal from "../Modals/BrickOutModal/BrickOutModal";
 import CardModal from "../Modals/CardModal/CardModal";
 
 import SnakeGameVideo from "../videos/SnakeGameVideo.mov";
+import BrickGameVideo from "../videos/BrickGameVideo.mov";
+import CardGameVideo from "../videos/CardGameVideo.mov";
 
 const Footer = () => {
   const [modalOpen, setModalOpen] = useState(0);
   const modalRef = useRef(null);
   const containerRef = useRef(null);
 
-  const videoRef = useRef();
-  const [isHovered, setIsHovered] = useState(false);
+  const snakeGameVideoRef = useRef();
+  const brickGameVideoRef = useRef();
+  const cardGameVideoRef = useRef();
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    videoRef.current.play();
+  const [isSnakeGameHovered, setIsSnakeGameHovered] = useState(false);
+  const [isBrickGameHovered, setIsBrickGameHovered] = useState(false);
+  const [isCardGameHovered, setIsCardGameHovered] = useState(false);
+
+  const handleMouseEnterSnakeGame = () => {
+    setIsSnakeGameHovered(true);
+    if (snakeGameVideoRef.current) {
+      snakeGameVideoRef.current.play();
+    }
   };
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    videoRef.current.pause();
+  const handleMouseLeaveSnakeGame = () => {
+    setIsSnakeGameHovered(false);
+    if (snakeGameVideoRef.current) {
+      snakeGameVideoRef.current.pause();
+    }
+  };
+
+  const handleMouseEnterBrickGame = () => {
+    setIsBrickGameHovered(true);
+    brickGameVideoRef.current.play();
+  };
+
+  const handleMouseLeaveBrickGame = () => {
+    setIsBrickGameHovered(false);
+    brickGameVideoRef.current.pause();
+  };
+
+  const handleMouseEnterCardGame = () => {
+    setIsCardGameHovered(true);
+    cardGameVideoRef.current.play();
+  };
+
+  const handleMouseLeaveCardGame = () => {
+    setIsCardGameHovered(false);
+    cardGameVideoRef.current.pause();
   };
 
   const handleClickOutside = (event) => {
@@ -74,53 +105,117 @@ const Footer = () => {
   return (
     <div className="footerContainer">
       <div className="image-container" ref={containerRef}>
-        <button
-          className="SnakeGameModalButton"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onClick={() => setModalOpen(1)}
-        >
-          {!isHovered && (
-            <div
-              className="image-thumbnail"
-              style={{
-                backgroundImage:
-                  'url("../../resources/SnakeGameThumbnail.png")',
-                opacity: isHovered ? 0 : 1,
-                transition: "opacity 0.5s ease-in-out",
-              }}
-            />
-          )}
-          <video
-            ref={videoRef}
-            muted
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-              opacity: isHovered ? 1 : 0,
-              transition: "opacity 0.5s ease-in-out",
-            }}
-          >
-            <source src={SnakeGameVideo} type="video/mp4" />
-          </video>
-        </button>
-        <button
-          className="BrickGameModalButton"
-          onClick={() => setModalOpen(2)}
-        ></button>
-        <button
-          className="CardModalButton"
-          onClick={() => setModalOpen(3)}
-        ></button>
-        <button
-          className="modalButton"
-          onClick={() => setModalOpen(4)}
-        ></button>
+        <div className="infinite-scroll-x">
+          {[...Array(3)].map((_, i) => (
+            <React.Fragment key={i}>
+              <button
+                className="SnakeGameModalButton"
+                onMouseEnter={handleMouseEnterSnakeGame}
+                onMouseLeave={handleMouseLeaveSnakeGame}
+                onClick={() => setModalOpen(1)}
+              >
+                {!isSnakeGameHovered && (
+                  <div
+                    className="image-thumbnail"
+                    style={{
+                      backgroundImage:
+                        'url("../../resources/SnakeGameThumbnail.png")',
+                      opacity: isSnakeGameHovered ? 0 : 1,
+                      transition: "opacity 0.5s ease-in-out",
+                    }}
+                  />
+                )}
+                <video
+                  ref={snakeGameVideoRef}
+                  muted
+                  style={{
+                    position: "relative",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                    opacity: isSnakeGameHovered ? 1 : 0,
+                    transition: "opacity 0.5s ease-in-out",
+                  }}
+                >
+                  <source src={SnakeGameVideo} type="video/mp4" />
+                </video>
+              </button>
+              <button
+                className="BrickGameModalButton"
+                onMouseEnter={handleMouseEnterBrickGame}
+                onMouseLeave={handleMouseLeaveBrickGame}
+                onClick={() => setModalOpen(2)}
+              >
+                {!isBrickGameHovered && (
+                  <div
+                    className="image-thumbnail"
+                    style={{
+                      backgroundImage:
+                        'url("../../resources/BrickGaemThumbnail.png")',
+                      opacity: isBrickGameHovered ? 0 : 1,
+                      transition: "opacity 0.5s ease-in-out",
+                    }}
+                  />
+                )}
+                <video
+                  ref={brickGameVideoRef}
+                  muted
+                  style={{
+                    position: "relative",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    opacity: isBrickGameHovered ? 1 : 0,
+                    transition: "opacity 0.5s ease-in-out",
+                  }}
+                >
+                  <source src={BrickGameVideo} type="video/mp4" />
+                </video>
+              </button>
+              <button
+                className="CardModalButton"
+                onMouseEnter={handleMouseEnterCardGame}
+                onMouseLeave={handleMouseLeaveCardGame}
+                onClick={() => setModalOpen(3)}
+              >
+                {!isCardGameHovered && (
+                  <div
+                    className="image-thumbnail"
+                    style={{
+                      backgroundImage:
+                        'url("../../resources/CardGameThumbnail.png")',
+                      opacity: isCardGameHovered ? 0 : 1,
+                      transition: "opacity 0.5s ease-in-out",
+                    }}
+                  />
+                )}
+                <video
+                  ref={cardGameVideoRef}
+                  muted
+                  style={{
+                    position: "relative",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                    opacity: isCardGameHovered ? 1 : 0,
+                    transition: "opacity 0.5s ease-in-out",
+                  }}
+                >
+                  <source src={CardGameVideo} type="video/mp4" />
+                </video>
+              </button>
+            </React.Fragment>
+          ))}
+        </div>
       </div>
       <CSSTransition
         in={modalOpen === 1}
