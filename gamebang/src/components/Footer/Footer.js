@@ -25,16 +25,12 @@ const Footer = () => {
 
   const handleMouseEnterSnakeGame = () => {
     setIsSnakeGameHovered(true);
-    if (snakeGameVideoRef.current) {
-      snakeGameVideoRef.current.play();
-    }
+    snakeGameVideoRef.current.play();
   };
 
   const handleMouseLeaveSnakeGame = () => {
     setIsSnakeGameHovered(false);
-    if (snakeGameVideoRef.current) {
-      snakeGameVideoRef.current.pause();
-    }
+    snakeGameVideoRef.current.pause();
   };
 
   const handleMouseEnterBrickGame = () => {
@@ -87,17 +83,18 @@ const Footer = () => {
     const buttonCount = buttons.length;
 
     if (buttonCount > 0) {
-      const buttonWidth = buttons[0].offsetWidth;
-
       // CSS 애니메이션 시작
       container.style.animation = `slide ${buttonCount * 10}s infinite linear`;
 
-      container.addEventListener("mouseenter", () => {
-        container.style.animationPlayState = "paused";
-      });
+      // 각 버튼에 대해 이벤트 핸들러를 설정합니다.
+      buttons.forEach((button) => {
+        button.addEventListener("mouseenter", () => {
+          container.style.animationPlayState = "paused";
+        });
 
-      container.addEventListener("mouseleave", () => {
-        container.style.animationPlayState = "running";
+        button.addEventListener("mouseleave", () => {
+          container.style.animationPlayState = "running";
+        });
       });
     }
   }
@@ -128,6 +125,7 @@ const Footer = () => {
                 <video
                   ref={snakeGameVideoRef}
                   muted
+                  autoPlay
                   style={{
                     position: "relative",
                     top: "50%",
@@ -162,6 +160,7 @@ const Footer = () => {
                 )}
                 <video
                   ref={brickGameVideoRef}
+                  autoPlay
                   muted
                   style={{
                     position: "relative",
@@ -197,6 +196,7 @@ const Footer = () => {
                 )}
                 <video
                   ref={cardGameVideoRef}
+                  autoPlay
                   muted
                   style={{
                     position: "relative",
