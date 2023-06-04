@@ -136,7 +136,7 @@
               if (// 벽돌의 왼쪽 오른쪽 충돌
                 (x - ballRadius <= b.x + brickWidth &&
                   b.x + brickWidth <= x) ||
-                (x + ballRadius > b.x && b.x > x)
+                (x + ballRadius >= b.x && b.x >= x)
               ) {
                 if (b.y <= y && y <= b.y + brickHeight) { 
                   dx = -dx;
@@ -148,12 +148,12 @@
                   }
                   b.status = 0; // 블록 파괴
                 }
-              } else if (//벽돌의 상 하 충돌
+              } if (//벽돌의 상 하 충돌
                 (y + ballRadius >= b.y && b.y >= y) ||
                 (y - ballRadius <= b.y + brickHeight &&
                   b.y + brickHeight <= y)
               ) {
-                if (b.x < x && x < b.x + brickWidth) {
+                if (b.x <= x && x <= b.x + brickWidth) {
                   dy = -dy;
                   b.status = 0;
                   for (let i = 0; i < brickcollision_sounds.length; i++) {
