@@ -1,12 +1,12 @@
 .headerContainer {
   text-align: center;
-  padding: 60px 20px 20px 20px;
+  padding: 20px 20px 20px 20px;
   background-color: transparent;
 }
 
 .gameTitle {
-  color: #FFD700;
-  font-family: 'Orbitron', sans-serif;
+  color: #ffd700;
+  font-family: "Orbitron", sans-serif;
   font-size: 7em;
   text-shadow: 3px 3px #000000;
 }
